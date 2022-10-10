@@ -10,7 +10,7 @@ function App() {
   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
     useGeolocated({
       positionOptions: {
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
       },
       userDecisionTimeout: 5000,
     });
@@ -18,10 +18,9 @@ function App() {
   async function getData() {
     await axios
       .get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,temperature_2m`
+        `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`
       )
       .then((res) => {
-        console.log(res.data);
         setWeatherData(res.data);
       });
   }
