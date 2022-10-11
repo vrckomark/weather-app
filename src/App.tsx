@@ -34,7 +34,7 @@ function App() {
   }, [geoLocationReady]);
 
   const weatherDataProp = { ...weatherData };
-  document.body.classList.add("bg-sky-400");
+  document.body.classList.add("bg-background");
 
   return (
     <div className="text-2xl text-white">

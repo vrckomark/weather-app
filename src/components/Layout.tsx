@@ -55,15 +55,12 @@ export default function Layout(weatherData: any) {
     timesUnix.indexOf(closestTime), //from now
     timesUnix.indexOf(closestTime) + 8 // to 10h in advance get weather
   );
-
-  // const curWeatherCode =
-  //   WMO[weatherData.current_weather.weathercode as keyof typeof WMO]
   return (
     <>
       <main className="text-2xl text-white">
-        <div className="flex flex-col justify-center items-center">
-          <div className="grid grid-cols-8 grid-rows-2 w-screen ">
-            <div className="col-span-8 flex flex-col justify-between p-6 items-center">
+        <div className="flex flex-col justify-center items-center px-2">
+          <div className="grid grid-cols-8 grid-rows-2 w-full bg-white bg-opacity-20 rounded-xl mb-8 mt-8">
+            <div className="col-span-8 flex flex-col justify-between px-6 pb-6 items-center">
               <div className="flex items-center justify-between w-full px-4">
                 <div className="text-6xl">{curWeather.temperature}°C</div>
                 <>
@@ -71,19 +68,23 @@ export default function Layout(weatherData: any) {
                     return (
                       <>
                         {obj.weathercode === curWeather.weathercode ? (
-                          <img src={obj.svg} alt={obj.slug} className="w-24" />
+                          <img
+                            src={obj.svg}
+                            alt={obj.slug}
+                            className="w-24 mr-10"
+                          />
                         ) : null}
                       </>
                     );
                   })}
                 </>
               </div>
-              <div className="w-full flex pl-8">Feels like {feelsLike}°C</div>
+              <div className="w-full flex pl-8">Čuti se kot {feelsLike}°C</div>
             </div>
             {weatherCodes.map((obj, index) => {
               return (
                 <div>
-                  <div className="text-lg flex justify-center">
+                  <div className="text-base flex justify-center">
                     {(times[index].getHours() + 1).toString().length < 2 ? (
                       <>0</>
                     ) : null}
@@ -108,7 +109,7 @@ export default function Layout(weatherData: any) {
           <div className="flex flex-col w-full">
             {dailyTimes.map((time: Date, i: number) => {
               return (
-                <div className="flex">
+                <div className="bg-white bg-opacity-20 my-2 grid grid-cols-4 rounded-xl items-center px-2 text-xl">
                   <div>{weekDays[time.getDay()]}</div>
                   <div>{dailyTempMin[i]}°C</div>
                   <div>{dailyTempMax[i]}°C</div>
