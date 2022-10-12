@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import WMO from "../WMO.module";
-import useWindowDimensions from "../hooks/useWindowDimensions";
 
 export default function Layout(weatherData: any) {
-  const { screenWidth } = useWindowDimensions();
   const curWeather = weatherData.current_weather;
 
   const weekDays = [
@@ -19,7 +17,7 @@ export default function Layout(weatherData: any) {
   const temp: any = weatherData.daily.time.slice(1);
   const dailyTimes: any = [];
   temp.map((time: any) => {
-    dailyTimes.push(new Date(time));
+    return dailyTimes.push(new Date(time));
   });
   const dailyWeatherCodes: any = weatherData.daily.weathercode.slice(1);
   const dailyTempMax: any = weatherData.daily.temperature_2m_max.slice(1);
