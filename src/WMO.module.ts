@@ -38,7 +38,7 @@ const WMO = [
     svg: partlyCloudy,
     svgNight: partlyCloudyNight,
     hasNight: true,
-  }, //
+  },
   {
     weathercode: 3,
     name: "Oblačno",

@@ -38,8 +38,6 @@ function App() {
 
   return (
     <div className="text-2xl text-white">
-      {isGeolocationAvailable}
-      {isGeolocationEnabled}
       {!isGeolocationAvailable ? (
         <div className="w-full justify-center mt-16">
           Your browser does not support geolocation.
