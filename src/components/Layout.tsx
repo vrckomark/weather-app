@@ -140,7 +140,7 @@ export default function Layout(weatherData: any) {
                     {obj.weekDayShort}
                   </div>
                   <div className="pl-4 2xl:pl-8 hidden sm:flex">
-                    {obj.weekDays}
+                    {obj.weekDay}
                   </div>
                   {i === 0 ? (
                     <>
