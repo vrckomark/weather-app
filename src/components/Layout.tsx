@@ -144,17 +144,23 @@ export default function Layout(weatherData: any) {
                   </div>
                   {i === 0 ? (
                     <>
-                      <div className="after:content-['Min'] after:text-xs after:text-gray-200 after:absolute after:-translate-x-6 after:-translate-y-6 lg:after:text-base lg:after:-translate-x-8 2xl:after:text-lg 2xl:after:-translate-x-10">
-                        {obj.tempMin}°C
+                      <div className="flex flex-col items-end justify-between pr-8 md:pr-12 lg:pr-14">
+                        <div className="text-xs">Min</div>
+                        <div>{obj.tempMin}°C</div>
                       </div>
-                      <div className="after:content-['Max'] after:text-xs after:text-gray-200 after:absolute after:-translate-x-10 after:-translate-y-6 lg:after:text-base lg:after:-translate-x-12 2xl:after:text-lg 2xl:after:-translate-x-16">
-                        {obj.tempMax}°C
+                      <div className="flex flex-col items-start pl-8 md:pl-12 lg:pl-14">
+                        <div className="text-xs">Max</div>
+                        <div>{obj.tempMax}°C</div>
                       </div>
                     </>
                   ) : (
                     <>
-                      <div>{obj.tempMin}°C</div>
-                      <div>{obj.tempMax}°C</div>
+                      <div className="flex flex-col items-end justify-between pr-8 md:pr-12 lg:pr-14">
+                        {obj.tempMin}°C
+                      </div>
+                      <div className="flex flex-col items-start pl-8 md:pl-12 lg:pl-14">
+                        {obj.tempMax}°C
+                      </div>
                     </>
                   )}
 
