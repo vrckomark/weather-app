@@ -112,7 +112,12 @@ export default function Layout(weatherData: any) {
                     {(obj.time.getHours() + 1).toString().length < 2 ? (
                       <>0</>
                     ) : null}
-                    {obj.time.getHours() + 1}:00
+                    {obj.time.getHours() === 23 ? (
+                      <>00</>
+                    ) : (
+                      <>{obj.time.getHours() + 1}</>
+                    )}
+                    :00
                   </div>
                   {WMO.map((item: any) => {
                     return item.weathercode === obj.weathercode ? (
@@ -125,7 +130,7 @@ export default function Layout(weatherData: any) {
                       </>
                     ) : null;
                   })}
-                  <div className="text-lg  flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
+                  <div className="text-sm flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
                     {obj.temperature}°C
                   </div>
                 </div>
