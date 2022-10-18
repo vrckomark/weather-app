@@ -36,7 +36,7 @@ function App() {
 
   const weatherDataProp = { ...weatherData };
   document.body.classList.add("bg-background");
-
+  document.body.classList.add("overflow-x-hidden");
   return (
     <div className="text-2xl text-white">
       {!isGeolocationAvailable ? (

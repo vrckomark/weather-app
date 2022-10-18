@@ -1,4 +1,5 @@
 import WMO from "../WMO.module";
+import { BsGithub } from "react-icons/bs";
 
 export default function Layout(weatherData: any) {
   const curWeather = weatherData.current_weather;
@@ -190,7 +191,29 @@ export default function Layout(weatherData: any) {
           </div>
         </div>
       </main>
-      <footer></footer>
+      <footer className="w-screen bg-gray-700 flex flex-col justify-center py-8 mt-8 items-center">
+        <div className="flex">
+          <a
+            href="https://github.com/vrckomark/weather-app"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <BsGithub className="text-4xl mr-4 hover:text-sky-400 cursor-pointer transition-colors" />
+          </a>
+          <div>Made by Mark Vrčko / Vrechko</div>
+        </div>
+        <div className="flex justify-center items-center text-lg text-gray-300 mt-2">
+          Data provided by&nbsp;
+          <a
+            href="https://open-meteo.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-sky-400"
+          >
+            Open-Meteo
+          </a>
+        </div>
+      </footer>
     </>
   );
 }
