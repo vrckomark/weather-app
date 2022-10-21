@@ -191,18 +191,18 @@ export default function Layout(weatherData: any) {
           </div>
         </div>
       </main>
-      <footer className="w-screen bg-gray-700 flex flex-col justify-center py-8 mt-8 items-center">
-        <div className="flex">
+      <footer className="w-screen bg-gray-700 flex flex-col justify-center py-4 mt-12 items-center text-base sm:text-lg lg:text-xl lg:py-6 lg:mt-24">
+        <div className="flex justify-center items-center">
           <a
             href="https://github.com/vrckomark/weather-app"
             target="_blank"
             rel="noreferrer"
           >
-            <BsGithub className="text-4xl mr-4 hover:text-sky-400 cursor-pointer transition-colors" />
+            <BsGithub className="text-2xl sm:text-3xl lg:text-4xl mr-4 hover:text-sky-400 cursor-pointer transition-colors" />
           </a>
           <div>Made by Mark Vrčko / Vrechko</div>
         </div>
-        <div className="flex justify-center items-center text-lg text-gray-300 mt-2">
+        <div className="flex justify-center items-center text-sm text-gray-300 mt-2 sm:text-base lg:text-lg">
           Data provided by&nbsp;
           <a
             href="https://open-meteo.com/"
