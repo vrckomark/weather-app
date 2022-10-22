@@ -1,5 +1,6 @@
 import WMO from "../WMO.module";
 import { BsGithub } from "react-icons/bs";
+import HourlyForecast from "./HourlyForecast";
 
 export default function Layout(weatherData: any) {
   const curWeather = weatherData.current_weather;
@@ -13,6 +14,9 @@ export default function Layout(weatherData: any) {
     "Petek",
     "Sobota",
   ];
+
+  const currentTime = new Date(Date.now());
+  var obj: any, svg: any;
   var timesUnix: any = [];
   weatherData.hourly.time.map((time: any) => {
     return timesUnix.push(Date.parse(time));
@@ -22,37 +26,6 @@ export default function Layout(weatherData: any) {
       Math.abs(curr - Date.now()) < Math.abs(prev - Date.now()) ? curr : prev
     )
   );
-
-  var obj: any, svg: any;
-  const currentTime = new Date(Date.now());
-  var hourlyForecast: any = [];
-  timesUnix.forEach((time: any, i: number) => {
-    if (i >= now && i <= now + 8) {
-      WMO.map((item: any) => {
-        return item.weathercode ===
-          weatherData.hourly.weathercode[
-            i + weatherData.utc_offset_seconds / 60 / 60
-          ]
-          ? item.hasNight && currentTime.getHours() > 19
-            ? (svg = item.svgNight)
-            : (svg = item.svg)
-          : null;
-      });
-      obj = {
-        weathercode:
-          weatherData.hourly.weathercode[
-            i + weatherData.utc_offset_seconds / 60 / 60
-          ],
-        time: new Date(weatherData.hourly.time[i]),
-        temperature:
-          weatherData.hourly.temperature_2m[
-            i + weatherData.utc_offset_seconds / 60 / 60
-          ],
-        svg,
-      };
-      hourlyForecast.push(obj);
-    }
-  });
   var dailyForecast: any = [];
   weatherData.daily.time.forEach((time: Date, i: number) => {
     WMO.map((item: any) => {
@@ -72,9 +45,9 @@ export default function Layout(weatherData: any) {
     dailyForecast.push(obj);
   });
   dailyForecast = dailyForecast.slice(1);
-  hourlyForecast = hourlyForecast.slice(1);
 
   const feelsLike = weatherData.hourly.apparent_temperature[now];
+  const weatherDataProp = { ...weatherData };
 
   return (
     <>
@@ -92,7 +65,7 @@ export default function Layout(weatherData: any) {
                       <>
                         {obj.weathercode === curWeather.weathercode ? (
                           <img
-                            src={obj.svg}
+                            src={obj.hasNight ? obj.svgNight : obj.svg}
                             alt={obj.slug}
                             className="w-1/4 mr-8"
                           />
@@ -106,37 +79,7 @@ export default function Layout(weatherData: any) {
                 Čuti se kot {feelsLike}°C
               </div>
             </div>
-            {hourlyForecast.map((obj: any) => {
-              return (
-                <div>
-                  <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-4xl">
-                    {(obj.time.getHours() + 1).toString().length < 2 ? (
-                      <>0</>
-                    ) : null}
-                    {obj.time.getHours() === 23 ? (
-                      <>00</>
-                    ) : (
-                      <>{obj.time.getHours() + 1}</>
-                    )}
-                    :00
-                  </div>
-                  {WMO.map((item: any) => {
-                    return item.weathercode === obj.weathercode ? (
-                      <>
-                        <img
-                          src={item.svg}
-                          alt={item.slug}
-                          className=" flex justify-center"
-                        />
-                      </>
-                    ) : null;
-                  })}
-                  <div className="text-sm flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
-                    {obj.temperature}°C
-                  </div>
-                </div>
-              );
-            })}
+            <HourlyForecast {...weatherDataProp} />
           </div>
           <div className="flex flex-col w-full">
             {dailyForecast.map((obj: any, i: number) => {
