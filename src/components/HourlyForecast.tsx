@@ -25,16 +25,16 @@ const HourlyForecast = (forecastData: forecastType) => {
 
   var obj: any, svg: any;
   var hourlyForecast: any = [];
-  const currentTime = new Date(Date.now());
 
   timesUnix.forEach((time: any, i: number) => {
     if (i >= now && i <= now + 8) {
+      time = new Date(time);
       WMO.map((item: any) => {
         return item.weathercode ===
           forecastData.hourly.weathercode[
             i + forecastData.utc_offset_seconds / 60 / 60
           ]
-          ? item.hasNight && currentTime.getHours() > 19
+          ? (item.hasNight && time.getHours() > 18) || time.getHours() < 5
             ? (svg = item.svgNight)
             : (svg = item.svg)
           : null;
@@ -56,13 +56,18 @@ const HourlyForecast = (forecastData: forecastType) => {
   });
 
   hourlyForecast = hourlyForecast.slice(1);
+  console.log(hourlyForecast);
+
+  const isNight = (obj: any) => {
+    return obj.time.getHours() > 18 || obj.time.getHours() < 5;
+  };
 
   return (
     <>
       {hourlyForecast.map((obj: any, i: number) => {
         return (
           <>
-            {obj.time.getHours() > 21 || obj.time.getHours() < 5 ? (
+            {obj.time.getHours() > 18 || obj.time.getHours() < 5 ? (
               <>
                 {i === 0 ? (
                   <div className="bg-black bg-opacity-30 flex flex-col justify-center items-center rounded-l-xl">
@@ -167,7 +172,11 @@ const HourlyForecast = (forecastData: forecastType) => {
                   return item.weathercode === obj.weathercode ? (
                     <>
                       <img
-                        src={item.hasNight ? item.svgNight : item.svg}
+                        src={
+                          item.hasNight && isNight(obj)
+                            ? item.svgNight
+                            : item.svg
+                        }
                         alt={item.slug}
                         className=" flex justify-center"
                       />

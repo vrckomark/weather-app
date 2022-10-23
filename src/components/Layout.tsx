@@ -49,6 +49,8 @@ export default function Layout(weatherData: any) {
   const feelsLike = weatherData.hourly.apparent_temperature[now];
   const weatherDataProp = { ...weatherData };
 
+  const isNight = currentTime.getHours() > 19 && currentTime.getHours() < 5;
+
   return (
     <>
       <main className="text-2xl text-white sm:text-3xl lg:text-4xl 2xl:text-5xl lg:mx-12">
@@ -65,7 +67,9 @@ export default function Layout(weatherData: any) {
                       <>
                         {obj.weathercode === curWeather.weathercode ? (
                           <img
-                            src={obj.hasNight ? obj.svgNight : obj.svg}
+                            src={
+                              obj.hasNight && isNight ? obj.svgNight : obj.svg
+                            }
                             alt={obj.slug}
                             className="w-1/4 mr-8"
                           />
