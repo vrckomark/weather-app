@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useGeolocated } from "react-geolocated";
 import axios from "axios";
 import Layout from "./components/Layout";
-import forecastType from "./types/ForecastType";
 
 function App() {
   const [weatherData, setWeatherData] = useState<any>(null);

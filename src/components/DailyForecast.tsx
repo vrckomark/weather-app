@@ -1,5 +1,4 @@
 import WMO from "../WMO.module";
-import forecastType from "../types/ForecastType";
 
 const DailyForecast = (props: any) => {
   const { weatherData, weekDays, weekDaysShort } = props;
