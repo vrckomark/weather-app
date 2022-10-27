@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import "./App.css";
 import { useGeolocated } from "react-geolocated";
 import axios from "axios";
 import Layout from "./components/Layout";
+import forecastType from "./types/ForecastType";
 
 function App() {
   const [weatherData, setWeatherData] = useState<any>(null);
@@ -45,11 +45,13 @@ function App() {
     <div className="text-2xl text-white">
       {!isGeolocationAvailable ? (
         <div className="w-full justify-center mt-16">
-          Your browser does not support geolocation.
+          Vaš brskalnik ne podpira lokacije
         </div>
       ) : !isGeolocationEnabled ? (
-        <div className="w-full justify-center mt-16">
-          Geolocation is disabled.
+        <div className="flex flex-col w-screen items-center mt-24">
+          <div className="mb-8 text-7xl">:/</div>
+          <div>Lokacija je izklopljena</div>
+          <div>Vklopite lokacijo za delovanje strani</div>
         </div>
       ) : coords ? (
         <div>{weatherData && <Layout {...weatherDataProp} />}</div>

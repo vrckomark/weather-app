@@ -1,14 +1,5 @@
 import WMO from "../WMO.module";
-
-interface forecastType {
-  hourly: {
-    time: string[];
-    weathercode: number[];
-    temperature_2m: number[];
-    apparent_temperature: number[];
-  };
-  utc_offset_seconds: number;
-}
+import forecastType from "../types/ForecastType";
 
 const HourlyForecast = (forecastData: forecastType) => {
   var timesUnix: any = [];
@@ -27,7 +18,7 @@ const HourlyForecast = (forecastData: forecastType) => {
   var hourlyForecast: any = [];
 
   timesUnix.forEach((time: any, i: number) => {
-    if (i >= now && i <= now + 8) {
+    if (i >= now - 1 && i <= now + 7) {
       time = new Date(time);
       WMO.map((item: any) => {
         return item.weathercode ===
@@ -41,7 +32,7 @@ const HourlyForecast = (forecastData: forecastType) => {
       });
       obj = {
         weathercode:
-          forecastData.hourly.weathercode[
+          forecastData?.hourly.weathercode[
             i + forecastData.utc_offset_seconds / 60 / 60
           ],
         time: new Date(forecastData.hourly.time[i]),
@@ -56,12 +47,10 @@ const HourlyForecast = (forecastData: forecastType) => {
   });
 
   hourlyForecast = hourlyForecast.slice(1);
-  console.log(hourlyForecast);
 
   const isNight = (obj: any) => {
     return obj.time.getHours() > 18 || obj.time.getHours() < 5;
   };
-
   return (
     <>
       {hourlyForecast.map((obj: any, i: number) => {
@@ -71,7 +60,7 @@ const HourlyForecast = (forecastData: forecastType) => {
               <>
                 {i === 0 ? (
                   <div className="bg-black bg-opacity-30 flex flex-col justify-center items-center rounded-l-xl">
-                    <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-4xl ">
+                    <div className="text-base flex justify-center">
                       {(obj.time.getHours() + 1).toString().length < 2 ? (
                         <>0</>
                       ) : null}
@@ -88,18 +77,18 @@ const HourlyForecast = (forecastData: forecastType) => {
                           <img
                             src={item.hasNight ? item.svgNight : item.svg}
                             alt={item.slug}
-                            className=" flex justify-center"
+                            className="w-3/4 flex justify-center"
                           />
                         </>
                       ) : null;
                     })}
-                    <div className="text-sm flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
+                    <div className="text-sm flex justify-center sm:text-lg lg:text-xl xl:text-2xl 2xl:text-2xl">
                       {obj.temperature}°C
                     </div>
                   </div>
                 ) : i === hourlyForecast.length - 1 ? (
                   <div className="bg-black bg-opacity-30 flex flex-col justify-center items-center rounded-r-xl">
-                    <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-4xl ">
+                    <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-2xl ">
                       {(obj.time.getHours() + 1).toString().length < 2 ? (
                         <>0</>
                       ) : null}
@@ -116,18 +105,18 @@ const HourlyForecast = (forecastData: forecastType) => {
                           <img
                             src={item.hasNight ? item.svgNight : item.svg}
                             alt={item.slug}
-                            className=" flex justify-center"
+                            className="w-3/4 flex justify-center"
                           />
                         </>
                       ) : null;
                     })}
-                    <div className="text-sm flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
+                    <div className="text-sm flex justify-center sm:text-lg lg:text-xl xl:text-2xl 2xl:text-2xl">
                       {obj.temperature}°C
                     </div>
                   </div>
                 ) : (
                   <div className="bg-black bg-opacity-30 flex flex-col justify-center items-center">
-                    <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-4xl ">
+                    <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-2xl ">
                       {(obj.time.getHours() + 1).toString().length < 2 ? (
                         <>0</>
                       ) : null}
@@ -144,12 +133,12 @@ const HourlyForecast = (forecastData: forecastType) => {
                           <img
                             src={item.hasNight ? item.svgNight : item.svg}
                             alt={item.slug}
-                            className=" flex justify-center"
+                            className="w-3/4 flex justify-center"
                           />
                         </>
                       ) : null;
                     })}
-                    <div className="text-sm flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
+                    <div className="text-sm flex justify-center sm:text-lg xl:text-2xl lg:text-xl 2xl:text-2xl">
                       {obj.temperature}°C
                     </div>
                   </div>
@@ -157,7 +146,7 @@ const HourlyForecast = (forecastData: forecastType) => {
               </>
             ) : (
               <div className="flex flex-col justify-center items-center">
-                <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-4xl ">
+                <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-2xl ">
                   {(obj.time.getHours() + 1).toString().length < 2 ? (
                     <>0</>
                   ) : null}
@@ -178,12 +167,12 @@ const HourlyForecast = (forecastData: forecastType) => {
                             : item.svg
                         }
                         alt={item.slug}
-                        className=" flex justify-center"
+                        className="w-3/4 flex justify-center"
                       />
                     </>
                   ) : null;
                 })}
-                <div className="text-sm flex justify-center sm:text-xl lg:text-3xl 2xl:text-5xl">
+                <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
                   {obj.temperature}°C
                 </div>
               </div>
