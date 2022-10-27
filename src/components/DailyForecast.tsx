@@ -1,4 +1,6 @@
 import WMO from "../WMO.module";
+import ClearDay from "../assets/weather-icons/clear-day.svg";
+import ClearNight from "../assets/weather-icons/clear-night.svg";
 
 const DailyForecast = (props: any) => {
   const { weatherData, weekDays, weekDaysShort } = props;
@@ -19,6 +21,8 @@ const DailyForecast = (props: any) => {
       tempMax: weatherData.daily.temperature_2m_max[i],
       weathercode: weatherData.daily.weathercode[i],
       svg,
+      sunrise: new Date(weatherData.daily.sunrise[i]),
+      sunset: new Date(weatherData.daily.sunset[i]),
     };
     dailyForecast.push(obj);
   });
@@ -30,48 +34,83 @@ const DailyForecast = (props: any) => {
         return (
           <div
             key={i.toString()}
-            className="bg-white bg-opacity-20 my-2 grid grid-cols-4 rounded-xl items-center px-2 text-base py-2 sm:text-xl lg:text-2xl 2xl:text-4xl 2xl:py-0"
+            className="bg-white bg-opacity-20 my-2 grid grid-cols-5 sm:py-2 rounded-xl items-center px-2 text-base sm:text-xl lg:text-2xl lg:py-2 2xl:text-2xl"
           >
             <div className="pl-4 2xl:pl-8 sm:hidden">{obj.weekDayShort}</div>
             <div className="pl-4 2xl:pl-8 hidden sm:flex">{obj.weekDay}</div>
             {i === 0 ? (
               <>
-                <div className="flex flex-col items-end justify-between pr-8 md:pr-12 lg:pr-14">
-                  <div className="text-xs">Min</div>
+                <div className="flex flex-col items-end justify-between pr-4 md:pr-12 lg:pr-14 xl:pr-10">
+                  <div className="text-xs xl:text-sm">Min</div>
                   <div>{obj.tempMin}°C</div>
                 </div>
-                <div className="flex flex-col items-start pl-8 md:pl-12 lg:pl-14">
-                  <div className="text-xs">Max</div>
+                <div className="flex flex-col items-start pl-4 md:pl-12 lg:pl-14 xl:pl-10">
+                  <div className="text-xs xl:text-sm">Max</div>
                   <div>{obj.tempMax}°C</div>
                 </div>
               </>
             ) : (
               <>
-                <div className="flex flex-col items-end justify-between pr-8 md:pr-12 lg:pr-14">
+                <div className="flex flex-col items-end justify-between pr-4 md:pr-12 lg:pr-14 xl:pr-10">
                   {obj.tempMin}°C
                 </div>
-                <div className="flex flex-col items-start pl-8 md:pl-12 lg:pl-14">
+                <div className="flex flex-col items-start pl-4 md:pl-12 lg:pl-14 xl:pl-10">
                   {obj.tempMax}°C
                 </div>
               </>
             )}
-
-            {WMO.map((item, i: number) => {
-              return (
-                <>
-                  {item.weathercode === obj.weathercode ? (
-                    <>
-                      <img
-                        key={i.toString()}
-                        className="w-14 sm:w-16 lg:w-20 2xl:w-28"
-                        src={item.svg}
-                        alt={item.slug}
-                      />
-                    </>
-                  ) : null}
-                </>
-              );
-            })}
+            <div className="flex justify-start pl-4">
+              {WMO.map((item, i: number) => {
+                return (
+                  <>
+                    {item.weathercode === obj.weathercode ? (
+                      <>
+                        <img
+                          key={i.toString()}
+                          className="w-14 sm:w-16 lg:w-20 2xl:w-20"
+                          src={item.svg}
+                          alt={item.slug}
+                        />
+                      </>
+                    ) : null}
+                  </>
+                );
+              })}
+            </div>
+            <div className=" flex flex-col border-l-4 pl-4 border-yellow-500 rounded-sm">
+              <div className="flex">
+                <div>
+                  {obj.sunrise.getHours() + 1 < 10 ? (
+                    <>0{obj.sunrise.getHours() + 1}</>
+                  ) : (
+                    <>{obj.sunrise.getHours() + 1}</>
+                  )}
+                  :
+                  {obj.sunrise.getMinutes() + 1 < 10 ? (
+                    <>0{obj.sunrise.getMinutes() + 1}</>
+                  ) : (
+                    <>{obj.sunrise.getMinutes() + 1}</>
+                  )}
+                </div>
+                <img src={ClearDay} alt="clear-day" className="w-6" />
+              </div>
+              <div className="flex">
+                <div>
+                  {obj.sunset.getHours() + 1 < 10 ? (
+                    <>0{obj.sunset.getHours() + 1}</>
+                  ) : (
+                    <>{obj.sunset.getHours() + 1}</>
+                  )}
+                  :
+                  {obj.sunset.getMinutes() + 1 < 10 ? (
+                    <>0{obj.sunset.getMinutes() + 1}</>
+                  ) : (
+                    <>{obj.sunset.getMinutes() + 1}</>
+                  )}
+                </div>
+                <img src={ClearNight} alt="clear-night" className="w-6" />
+              </div>
+            </div>
           </div>
         );
       })}

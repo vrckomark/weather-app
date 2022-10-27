@@ -60,7 +60,7 @@ const HourlyForecast = (forecastData: forecastType) => {
               <>
                 {i === 0 ? (
                   <div className="bg-black bg-opacity-30 flex flex-col justify-center items-center rounded-l-xl">
-                    <div className="text-base flex justify-center">
+                    <div className="text-base flex justify-center sm:text-lg lg:text-2xl 2xl:text-2xl ">
                       {(obj.time.getHours() + 1).toString().length < 2 ? (
                         <>0</>
                       ) : null}

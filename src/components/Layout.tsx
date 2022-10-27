@@ -30,7 +30,7 @@ export default function Layout(weatherData: forecastType) {
   const feelsLike = weatherData?.hourly.apparent_temperature[now];
   const weatherDataProp = { ...weatherData };
 
-  const isNight = currentTime.getHours() > 19 && currentTime.getHours() < 5;
+  const isNight = currentTime.getHours() >= 19 || currentTime.getHours() < 5;
 
   return (
     <>

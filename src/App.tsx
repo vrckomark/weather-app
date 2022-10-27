@@ -14,11 +14,10 @@ function App() {
       },
       userDecisionTimeout: 5000,
     });
-
   async function getData() {
     await axios
       .get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`
+        `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`
       )
       .then((res) => {
         setWeatherData(res.data);
