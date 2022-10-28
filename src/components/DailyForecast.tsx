@@ -1,6 +1,7 @@
 import WMO from "../WMO.module";
 import ClearDay from "../assets/weather-icons/clear-day.svg";
 import ClearNight from "../assets/weather-icons/clear-night.svg";
+import Skeleton from "react-loading-skeleton";
 
 const DailyForecast = (props: any) => {
   const { weatherData, weekDays, weekDaysShort } = props;
@@ -108,7 +109,9 @@ const DailyForecast = (props: any) => {
                     <>{obj.sunset.getMinutes() + 1}</>
                   )}
                 </div>
-                <img src={ClearNight} alt="clear-night" className="w-6" />
+                {<img src={ClearNight} alt="clear-night" className="w-6" /> || (
+                  <Skeleton />
+                )}
               </div>
             </div>
           </div>

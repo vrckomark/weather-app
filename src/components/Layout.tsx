@@ -36,9 +36,9 @@ export default function Layout(weatherData: forecastType) {
     <>
       {weatherData && (
         <>
-          <main className="text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
+          <main className="mt-8 text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
             <div className="flex flex-col justify-center items-center px-2">
-              <div className="grid grid-cols-8 grid-rows-2 w-full bg-white bg-opacity-20 rounded-xl mb-8 mt-8">
+              <div className="grid grid-cols-8 grid-rows-2 w-full bg-white bg-opacity-20 rounded-xl mb-8">
                 <div className="col-span-8 flex flex-col justify-between px-6 pb-6 items-center 2xl:px-12">
                   <div className="flex items-center justify-between w-full ">
                     <div className="text-6xl lg:text-7xl 2xl:text-8xl">
