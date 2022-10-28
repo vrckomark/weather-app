@@ -24,8 +24,10 @@ function App() {
         `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`
       )
       .then((res) => {
-        setWeatherData(res.data);
-        setIsLoading(false);
+        setTimeout(() => {
+          setWeatherData(res.data);
+          setIsLoading(false);
+        }, 1000);
       });
   }
   const geoLocationReady =
