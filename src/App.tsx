@@ -27,7 +27,7 @@ function App() {
         setTimeout(() => {
           setWeatherData(res.data);
           setIsLoading(false);
-        }, 1000);
+        }, 700);
       });
   }
   const geoLocationReady =
@@ -49,9 +49,17 @@ function App() {
   }
   document.body.classList.add("overflow-x-hidden");
 
+  const currentTime = new Date(Date.now());
+  const isNight = currentTime.getHours() >= 19 || currentTime.getHours() < 5;
+
+  // nightbase 2f4d6a night highlight 4a79a5
   return (
     <div className="text-2xl text-white">
-      <SkeletonTheme baseColor="#2f4d6a" highlightColor="#4a79a5">
+      <SkeletonTheme
+        baseColor={isNight ? "#2f4d6a" : "#1fb6e0"}
+        highlightColor={isNight ? "#4a79a5" : "#6acfeb"}
+        duration={0.75}
+      >
         {isLoading && <CardSkeleton />}
         {!isGeolocationAvailable && (
           <div className="w-full justify-center mt-16">

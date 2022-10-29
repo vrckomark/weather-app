@@ -1,7 +1,6 @@
 import WMO from "../WMO.module";
 import ClearDay from "../assets/weather-icons/clear-day.svg";
 import ClearNight from "../assets/weather-icons/clear-night.svg";
-import Skeleton from "react-loading-skeleton";
 
 const DailyForecast = (props: any) => {
   const { weatherData, weekDays, weekDaysShort } = props;
@@ -34,7 +33,7 @@ const DailyForecast = (props: any) => {
       {dailyForecast.map((obj: any, i: number) => {
         return (
           <div
-            key={i.toString()}
+            key={i}
             className="bg-white bg-opacity-20 my-2 grid grid-cols-5 sm:py-2 rounded-xl items-center px-2 text-base sm:text-xl lg:text-2xl lg:py-2 2xl:text-2xl"
           >
             <div className="pl-4 2xl:pl-8 sm:hidden">{obj.weekDayShort}</div>
@@ -63,7 +62,7 @@ const DailyForecast = (props: any) => {
             <div className="flex justify-start pl-4">
               {WMO.map((item, i: number) => {
                 return (
-                  <>
+                  <div key={i}>
                     {item.weathercode === obj.weathercode ? (
                       <>
                         <img
@@ -74,11 +73,11 @@ const DailyForecast = (props: any) => {
                         />
                       </>
                     ) : null}
-                  </>
+                  </div>
                 );
               })}
             </div>
-            <div className=" flex flex-col border-l-4 pl-4 border-yellow-500 rounded-sm">
+            <div className=" flex flex-col border-l-4 pl-2 border-amber-300 rounded-sm">
               <div className="flex">
                 <div>
                   {obj.sunrise.getHours() + 1 < 10 ? (
@@ -93,7 +92,11 @@ const DailyForecast = (props: any) => {
                     <>{obj.sunrise.getMinutes() + 1}</>
                   )}
                 </div>
-                <img src={ClearDay} alt="clear-day" className="w-6" />
+                <img
+                  src={ClearDay}
+                  alt="clear-day"
+                  className="w-6 bg-white bg-opacity-30 rounded-full ml-1  md:ml-4"
+                />
               </div>
               <div className="flex">
                 <div>
@@ -109,9 +112,11 @@ const DailyForecast = (props: any) => {
                     <>{obj.sunset.getMinutes() + 1}</>
                   )}
                 </div>
-                {<img src={ClearNight} alt="clear-night" className="w-6" /> || (
-                  <Skeleton />
-                )}
+                <img
+                  src={ClearNight}
+                  alt="clear-night"
+                  className="w-6 bg-white bg-opacity-30 rounded-full ml-1 md:ml-4"
+                />
               </div>
             </div>
           </div>

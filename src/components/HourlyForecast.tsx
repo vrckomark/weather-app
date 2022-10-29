@@ -55,7 +55,7 @@ const HourlyForecast = (forecastData: forecastType) => {
     <>
       {hourlyForecast.map((obj: any, i: number) => {
         return (
-          <>
+          <div className="flex" key={i}>
             {obj.time.getHours() > 18 || obj.time.getHours() < 5 ? (
               <>
                 {i === 0 ? (
@@ -73,13 +73,12 @@ const HourlyForecast = (forecastData: forecastType) => {
                     </div>
                     {WMO.map((item: any) => {
                       return item.weathercode === obj.weathercode ? (
-                        <>
-                          <img
-                            src={item.hasNight ? item.svgNight : item.svg}
-                            alt={item.slug}
-                            className="w-3/4 flex justify-center"
-                          />
-                        </>
+                        <img
+                          src={item.hasNight ? item.svgNight : item.svg}
+                          alt={item.slug}
+                          className="w-3/4 flex justify-center"
+                          key={i}
+                        />
                       ) : null;
                     })}
                     <div className="text-sm flex justify-center sm:text-lg lg:text-xl xl:text-2xl 2xl:text-2xl">
@@ -101,13 +100,12 @@ const HourlyForecast = (forecastData: forecastType) => {
                     </div>
                     {WMO.map((item: any) => {
                       return item.weathercode === obj.weathercode ? (
-                        <>
-                          <img
-                            src={item.hasNight ? item.svgNight : item.svg}
-                            alt={item.slug}
-                            className="w-3/4 flex justify-center"
-                          />
-                        </>
+                        <img
+                          src={item.hasNight ? item.svgNight : item.svg}
+                          alt={item.slug}
+                          className="w-3/4 flex justify-center"
+                          key={i}
+                        />
                       ) : null;
                     })}
                     <div className="text-sm flex justify-center sm:text-lg lg:text-xl xl:text-2xl 2xl:text-2xl">
@@ -129,13 +127,12 @@ const HourlyForecast = (forecastData: forecastType) => {
                     </div>
                     {WMO.map((item: any) => {
                       return item.weathercode === obj.weathercode ? (
-                        <>
-                          <img
-                            src={item.hasNight ? item.svgNight : item.svg}
-                            alt={item.slug}
-                            className="w-3/4 flex justify-center"
-                          />
-                        </>
+                        <img
+                          src={item.hasNight ? item.svgNight : item.svg}
+                          alt={item.slug}
+                          className="w-3/4 flex justify-center"
+                          key={i}
+                        />
                       ) : null;
                     })}
                     <div className="text-sm flex justify-center sm:text-lg xl:text-2xl lg:text-xl 2xl:text-2xl">
@@ -159,17 +156,14 @@ const HourlyForecast = (forecastData: forecastType) => {
                 </div>
                 {WMO.map((item: any) => {
                   return item.weathercode === obj.weathercode ? (
-                    <>
-                      <img
-                        src={
-                          item.hasNight && isNight(obj)
-                            ? item.svgNight
-                            : item.svg
-                        }
-                        alt={item.slug}
-                        className="w-3/4 flex justify-center"
-                      />
-                    </>
+                    <img
+                      src={
+                        item.hasNight && isNight(obj) ? item.svgNight : item.svg
+                      }
+                      alt={item.slug}
+                      className="w-3/4 flex justify-center"
+                      key={i}
+                    />
                   ) : null;
                 })}
                 <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
@@ -177,7 +171,7 @@ const HourlyForecast = (forecastData: forecastType) => {
                 </div>
               </div>
             )}
-          </>
+          </div>
         );
       })}
     </>

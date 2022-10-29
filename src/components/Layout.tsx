@@ -44,26 +44,21 @@ export default function Layout(weatherData: forecastType) {
                     <div className="text-6xl lg:text-7xl 2xl:text-8xl">
                       {weatherData.current_weather.temperature}°C
                     </div>
-                    <>
-                      {WMO.map((obj) => {
-                        return (
-                          <>
-                            {obj.weathercode ===
-                            weatherData.current_weather.weathercode ? (
-                              <img
-                                src={
-                                  obj.hasNight && isNight
-                                    ? obj.svgNight
-                                    : obj.svg
-                                }
-                                alt={obj.slug}
-                                className="w-1/4 mr-8 mt-4"
-                              />
-                            ) : null}
-                          </>
-                        );
-                      })}
-                    </>
+                    {WMO.map((obj, i) => {
+                      return (
+                        obj.weathercode ===
+                          weatherData.current_weather.weathercode && (
+                          <img
+                            src={
+                              obj.hasNight && isNight ? obj.svgNight : obj.svg
+                            }
+                            alt={obj.slug}
+                            className="w-1/4 mr-8 mt-4"
+                            key={i}
+                          />
+                        )
+                      );
+                    })}
                   </div>
                   <div className="w-full flex pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14 2xl:ml-8">
                     Čuti se kot {feelsLike}°C
