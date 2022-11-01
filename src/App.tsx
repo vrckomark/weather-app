@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  useLayoutEffect,
+  useMemo,
+  createContext,
+} from "react";
 import { useGeolocated } from "react-geolocated";
 import axios from "axios";
 import Layout from "./components/Layout";
@@ -8,6 +14,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import CardSkeleton from "./components/CardSkeleton";
 
 function App() {
+  const currentTime = new Date(Date.now());
+  const isNight = currentTime.getHours() >= 19 || currentTime.getHours() < 5;
+
   const [weatherData, setWeatherData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -40,19 +49,18 @@ function App() {
   }, [geoLocationReady]);
 
   const weatherDataProp = { ...weatherData };
-  const now = new Date(Date.now());
 
-  if (now.getHours() >= 19) {
-    document.body.classList.add("bg-backgroundNight");
-  } else {
-    document.body.classList.add("bg-background");
-  }
-  document.body.classList.add("overflow-x-hidden");
+  useLayoutEffect(() => {
+    const now = new Date(Date.now());
 
-  const currentTime = new Date(Date.now());
-  const isNight = currentTime.getHours() >= 19 || currentTime.getHours() < 5;
+    if (now.getHours() >= 19) {
+      document.body.classList.add("bg-backgroundNight");
+    } else {
+      document.body.classList.add("bg-background");
+    }
+    document.body.classList.add("overflow-x-hidden");
+  }, []);
 
-  // nightbase 2f4d6a night highlight 4a79a5
   return (
     <div className="text-2xl text-white">
       <SkeletonTheme

@@ -4,7 +4,7 @@ export default interface forecastType {
     weathercode: number;
   };
   hourly: {
-    time: string[];
+    time: Date[];
     weathercode: number[];
     temperature_2m: number[];
     apparent_temperature: number[];
