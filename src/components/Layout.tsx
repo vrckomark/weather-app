@@ -43,7 +43,7 @@ const isNight: boolean =
 const getTime = (time: Date) => {
   let _temp: string = "";
   (time.getHours() + 1).toString().length < 2 ? (_temp += "0") : (_temp += "");
-  time.getHours() === 23 ? (_temp += "00") : (_temp += time.getHours());
+  time.getHours() === 23 ? (_temp += "00") : (_temp += time.getHours() + 1);
   return _temp + ":00";
 };
 
@@ -107,6 +107,10 @@ export default function Layout(weatherData: forecastType) {
   });
   hourlyForecast = hourlyForecast.slice(1);
 
+  hourlyForecast.map((obj: any) => {
+    return console.log(obj.time.getHours());
+  });
+
   return (
     weatherData && (
       <>
@@ -151,7 +155,7 @@ export default function Layout(weatherData: forecastType) {
                       ticks: {
                         color: "white",
                         font: {
-                          size: 16,
+                          size: 18,
                         },
                       },
                     },
