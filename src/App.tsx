@@ -1,11 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  useEffect,
-  useState,
-  useLayoutEffect,
-  useMemo,
-  createContext,
-} from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useGeolocated } from "react-geolocated";
 import axios from "axios";
 import Layout from "./components/Layout";

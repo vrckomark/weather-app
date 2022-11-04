@@ -1,7 +1,4 @@
 import WMO from "../WMO.module";
-import forecastType from "../types/ForecastType";
-import WMOType from "../types/WMOType";
-import { timeStamp } from "console";
 
 interface hourlyObj {
   time: Date;

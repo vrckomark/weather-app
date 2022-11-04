@@ -48,8 +48,6 @@ const getTime = (time: Date) => {
 };
 
 export default function Layout(weatherData: forecastType) {
-  const weatherDataProp = { ...weatherData };
-
   const getNow = useMemo(() => {
     var timesUnix: any = [];
     weatherData?.hourly.time.map((time: any) => {
