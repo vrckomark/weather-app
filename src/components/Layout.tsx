@@ -15,6 +15,7 @@ import HourlyForecast from "./HourlyForecast";
 import DailyForecast from "./DailyForecast";
 import forecastType from "../types/ForecastType";
 import Footer from "./Footer";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 ChartJS.register(
   LineElement,
@@ -48,6 +49,8 @@ const getTime = (time: Date) => {
 };
 
 export default function Layout(weatherData: forecastType) {
+  const { width } = useWindowDimensions();
+
   const getNow = useMemo(() => {
     var timesUnix: any = [];
     weatherData?.hourly.time.map((time: any) => {
@@ -143,7 +146,7 @@ export default function Layout(weatherData: forecastType) {
               </div>
               <HourlyForecast hourlyForecast={hourlyForecast} />
               <Line
-                className="mb-4 px-6"
+                className="mb-4 sm:px-2 md:px-4 lg:px-8 xl:px-8 2xl:px-10"
                 options={{
                   scales: {
                     x: {
@@ -173,7 +176,7 @@ export default function Layout(weatherData: forecastType) {
                   responsive: true,
                   plugins: {
                     tooltip: {
-                      backgroundColor: "rgba(0, 0, 0,0.1)",
+                      backgroundColor: "rgba(0, 0, 0,0.4)",
                       bodyColor: "white",
 
                       titleSpacing: 4,
@@ -214,7 +217,15 @@ export default function Layout(weatherData: forecastType) {
                     },
                   ],
                 }}
-                height={40}
+                height={
+                  width < 640
+                    ? 60
+                    : width < 768 && width > 640
+                    ? 52
+                    : width > 768 && width < 1024
+                    ? 45
+                    : 40
+                }
               />
             </div>
             <div className="flex flex-col w-full">
