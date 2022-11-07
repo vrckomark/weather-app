@@ -9,7 +9,7 @@ module.exports = {
       },
       colors: {
         secondary: "#87CEEB",
-        background: "#6acfeb",
+        background: "#27aed3",
         backgroundNight: "#365878",
       },
     },

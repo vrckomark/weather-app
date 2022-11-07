@@ -110,10 +110,6 @@ export default function Layout(weatherData: forecastType) {
   });
   hourlyForecast = hourlyForecast.slice(1);
 
-  hourlyForecast.map((obj: any) => {
-    return console.log(obj.time.getHours());
-  });
-
   return (
     weatherData && (
       <>
@@ -158,7 +154,12 @@ export default function Layout(weatherData: forecastType) {
                       ticks: {
                         color: "white",
                         font: {
-                          size: 18,
+                          size:
+                            width > 1024
+                              ? 20
+                              : width > 768 && width < 1024
+                              ? 18
+                              : 16,
                         },
                       },
                     },
