@@ -62,12 +62,6 @@ function App() {
         highlightColor={isNight ? "#4a79a5" : "#6acfeb"}
         duration={0.75}
       >
-        {isLoading && <CardSkeleton />}
-        {!isGeolocationAvailable && (
-          <div className="w-full justify-center mt-16">
-            Vaš brskalnik ne podpira lokacije
-          </div>
-        )}
         {!isGeolocationEnabled && (
           <div className="flex flex-col w-screen items-center mt-24">
             <div className="mb-8 text-7xl">:/</div>
@@ -75,6 +69,13 @@ function App() {
             <div>Vklopite lokacijo za delovanje strani</div>
           </div>
         )}
+        {!isGeolocationAvailable && (
+          <div className="w-full justify-center mt-16">
+            Vaš brskalnik ne podpira lokacije
+          </div>
+        )}
+        {isLoading && isGeolocationEnabled ? <CardSkeleton /> : null}
+
         {coords && <div>{weatherData && <Layout {...weatherDataProp} />}</div>}
       </SkeletonTheme>
     </div>
