@@ -22,15 +22,22 @@ function App() {
       userDecisionTimeout: 5000,
     });
   async function getData() {
+    // await axios
+    //   .get(
+    //     `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`
+    //   )
+    //   .then((res) => {
+    //     setTimeout(() => {
+    //       setWeatherData(res.data);
+    //       setIsLoading(false);
+    //     }, 700);
+    //   });
     await axios
       .get(
-        `https://api.open-meteo.com/v1/forecast?latitude=${coords?.latitude}&longitude=${coords?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords?.latitude},${coords?.longitude}&key=AIzaSyBFf-m-LTfsbd-XbWJayMUTwyvReFBL9ac`
       )
       .then((res) => {
-        setTimeout(() => {
-          setWeatherData(res.data);
-          setIsLoading(false);
-        }, 700);
+        console.log(res);
       });
   }
   const geoLocationReady =
@@ -76,7 +83,16 @@ function App() {
         )}
         {isLoading && isGeolocationEnabled ? <CardSkeleton /> : null}
 
-        {coords && <div>{weatherData && <Layout {...weatherDataProp} />}</div>}
+        {/* {coords && <div>{weatherData && <Layout {...weatherDataProp} />}</div>} */}
+        {coords && (
+          <div>
+            {weatherData && (
+              <div>
+                {coords.latitude} | {coords.longitude}
+              </div>
+            )}
+          </div>
+        )}
       </SkeletonTheme>
     </div>
   );
