@@ -30,13 +30,13 @@ function App() {
         setWeatherData(res.data);
         setIsLoading(false);
       });
-    await axios
-      .get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords?.latitude},${coords?.longitude}&key=AIzaSyBFf-m-LTfsbd-XbWJayMUTwyvReFBL9ac`
-      )
-      .then((res) => {
-        console.log(res);
-      });
+    // await axios
+    //   .get(
+    //     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords?.latitude},${coords?.longitude}&key=AIzaSyBFf-m-LTfsbd-XbWJayMUTwyvReFBL9ac`
+    //   )
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
   }
   const geoLocationReady =
     isGeolocationAvailable && isGeolocationEnabled && coords;
