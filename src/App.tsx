@@ -39,7 +39,7 @@ function App() {
     setIsLoading(true);
     await axios
       .get(
-        `http://localhost:5000/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+        `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
       )
       .then((res) => {
         setUserCity(res.data.user_city);
