@@ -37,15 +37,24 @@ function App() {
       });
     // Get city name
     setIsLoading(true);
-    await axios
+    await axios // DEVELOPMENT
       .get(
-        `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+        `http://localhost:5000/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
       )
       .then((res) => {
         setUserCity(res.data.user_city);
         setIsLoading(false);
       });
   }
+  //   await axios // PRODUCTION
+  //     .get(
+  //       `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+  //     )
+  //     .then((res) => {
+  //       setUserCity(res.data.user_city);
+  //       setIsLoading(false);
+  //     });
+  // }
 
   useEffect(() => {
     if (geoLocationReady) {
