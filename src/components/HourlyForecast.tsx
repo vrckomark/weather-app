@@ -14,7 +14,10 @@ const HourlyForecast = ({ hourlyForecast }: any) => {
 
   return hourlyForecast.map((obj: hourlyObj, i: number) => {
     return obj.time.getHours() > 18 || obj.time.getHours() < 5 ? (
-      <div className="bg-black bg-opacity-30  py-6 flex flex-col justify-center items-center ">
+      <div
+        className="bg-black bg-opacity-30  py-6 flex flex-col justify-center items-center "
+        key={i}
+      >
         {WMO.map((item: any) => {
           return item.weathercode === obj.weathercode ? (
             <img

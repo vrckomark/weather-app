@@ -11,7 +11,7 @@ function App() {
   const currentTime = new Date(Date.now());
   const isNight = currentTime.getHours() >= 19 || currentTime.getHours() < 5;
 
-  const [userCity, setUserCity] = useState<string>("");
+  const [userCity, setUserCity] = useState<string | null>("");
   const [weatherData, setWeatherData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -36,24 +36,23 @@ function App() {
         setIsLoading(false);
       });
     // Get city name
-    // await axios // DEVELOPMENT
-    //   .get(
-    //     `http://localhost:5000/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
-    //   )
-    //   .then((res) => {
-    //     setUserCity(res.data.user_city);
-    //     console.log(res.data.user_city);
-    //     setIsLoading(false);
-    //   });
-    //
-    await axios // PRODUCTION
+    await axios // DEVELOPMENT
       .get(
-        `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+        `http://localhost:5000/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
       )
       .then((res) => {
         setUserCity(res.data.user_city);
         setIsLoading(false);
       });
+
+    //   await axios // PRODUCTION
+    //     .get(
+    //       `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+    //     )
+    //     .then((res) => {
+    //       setUserCity(res.data.user_city);
+    //       setIsLoading(false);
+    //     });
   }
 
   useEffect(() => {
@@ -96,11 +95,7 @@ function App() {
         )}
         {isLoading && isGeolocationEnabled ? <CardSkeleton /> : null}
 
-        {coords && (
-          <div>
-            {weatherData && userCity && <Layout {...weatherDataProp} />}
-          </div>
-        )}
+        {coords && <div>{weatherData && <Layout {...weatherDataProp} />}</div>}
       </SkeletonTheme>
     </div>
   );
