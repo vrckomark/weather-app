@@ -50,7 +50,6 @@ const getTime = (time: Date) => {
 
 export default function Layout(weatherData: forecastType) {
   const { width } = useWindowDimensions();
-
   const getNow = useMemo(() => {
     var timesUnix: any = [];
     weatherData?.hourly.time.map((time: any) => {
@@ -116,7 +115,7 @@ export default function Layout(weatherData: forecastType) {
         <main className="mt-8 text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
           <div className="flex flex-col justify-center items-center px-2">
             <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
-              <div className="col-span-8 flex flex-col justify-between px-6 pb-6 items-center 2xl:px-12">
+              <div className="col-span-8 flex flex-col justify-between px-6 pb-6 items-start 2xl:px-12">
                 <div className="flex items-center justify-between w-full ">
                   <div className="text-6xl lg:text-7xl 2xl:text-8xl">
                     {weatherData.current_weather.temperature}°C
@@ -134,6 +133,9 @@ export default function Layout(weatherData: forecastType) {
                       )
                     );
                   })}
+                </div>
+                <div className="w-max mb-4 flex pl-2 text-xl md:text-2xl lg:text-3xl 2xl:text-4xl 2xl:mb-14 2xl:ml-8">
+                  {weatherData.userCity}
                 </div>
                 <div className="w-full flex pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14 2xl:ml-8">
                   Čuti se kot {weatherData.hourly.apparent_temperature[getNow]}

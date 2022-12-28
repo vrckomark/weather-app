@@ -16,4 +16,5 @@ export default interface forecastType {
     temperature_2m_max: number[];
     temperature_2m_min: number[];
   };
+  userCity: string;
 }

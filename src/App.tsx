@@ -11,6 +11,7 @@ function App() {
   const currentTime = new Date(Date.now());
   const isNight = currentTime.getHours() >= 19 || currentTime.getHours() < 5;
 
+  const [userCity, setUserCity] = useState<string>("");
   const [weatherData, setWeatherData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -21,6 +22,10 @@ function App() {
       },
       userDecisionTimeout: 5000,
     });
+
+  const geoLocationReady =
+    isGeolocationAvailable && isGeolocationEnabled && coords;
+
   async function getData() {
     await axios
       .get(
@@ -30,16 +35,17 @@ function App() {
         setWeatherData(res.data);
         setIsLoading(false);
       });
-    // await axios
-    //   .get(
-    //     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords?.latitude},${coords?.longitude}&key=AIzaSyBFf-m-LTfsbd-XbWJayMUTwyvReFBL9ac`
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //   });
+    // Get city name
+    setIsLoading(true);
+    await axios
+      .get(
+        `http://localhost:5000/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+      )
+      .then((res) => {
+        setUserCity(res.data.user_city);
+        setIsLoading(false);
+      });
   }
-  const geoLocationReady =
-    isGeolocationAvailable && isGeolocationEnabled && coords;
 
   useEffect(() => {
     if (geoLocationReady) {
@@ -47,7 +53,7 @@ function App() {
     }
   }, [geoLocationReady]);
 
-  const weatherDataProp = { ...weatherData };
+  const weatherDataProp = { ...weatherData, userCity };
 
   useLayoutEffect(() => {
     const now = new Date(Date.now());
@@ -81,7 +87,11 @@ function App() {
         )}
         {isLoading && isGeolocationEnabled ? <CardSkeleton /> : null}
 
-        {coords && <div>{weatherData && <Layout {...weatherDataProp} />}</div>}
+        {coords && (
+          <div>
+            {weatherData && userCity && <Layout {...weatherDataProp} />}
+          </div>
+        )}
       </SkeletonTheme>
     </div>
   );
