@@ -26,6 +26,14 @@ const DailyForecast = (props: any) => {
     };
     dailyForecast.push(obj);
   });
+
+  const now = new Date(Date.now());
+  if (now >= dailyForecast[0].sunset || now <= dailyForecast[0].sunrise) {
+    document.body.classList.add("bg-backgroundNight");
+  } else {
+    document.body.classList.add("bg-background");
+  }
+  document.body.classList.add("overflow-x-hidden");
   dailyForecast = dailyForecast.slice(1);
 
   return (

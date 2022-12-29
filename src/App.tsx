@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGeolocated } from "react-geolocated";
 import axios from "axios";
 import Layout from "./components/Layout";
@@ -62,17 +62,6 @@ function App() {
   }, [geoLocationReady]);
 
   const weatherDataProp = { ...weatherData, userCity };
-
-  useLayoutEffect(() => {
-    const now = new Date(Date.now());
-
-    if (now.getHours() >= 19) {
-      document.body.classList.add("bg-backgroundNight");
-    } else {
-      document.body.classList.add("bg-background");
-    }
-    document.body.classList.add("overflow-x-hidden");
-  }, []);
 
   return (
     <div className="text-2xl text-white">
