@@ -33,6 +33,7 @@ function App() {
       )
       .then((res) => {
         setWeatherData(res.data);
+
         setIsLoading(false);
       });
     // Get city name
