@@ -55,6 +55,7 @@ function App() {
       )
       .then((res) => {
         setUserCity(res.data.user_city);
+        console.log(res.data);
         setIsLoading(false);
       });
   }
