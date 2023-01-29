@@ -117,8 +117,13 @@ export default function Layout(weatherData: forecastType) {
             <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
               <div className="col-span-8 flex flex-col justify-between px-6 pb-6 items-start 2xl:px-12">
                 <div className="flex items-center justify-between w-full ">
-                  <div className="text-6xl lg:text-7xl 2xl:text-8xl">
-                    {weatherData.current_weather.temperature}°C
+                  <div className="flex items-center text-6xl lg:text-7xl 2xl:text-8xl">
+                    <div className="">
+                      {weatherData.current_weather.temperature}
+                    </div>
+                    <div className="text-5xl lg:text-6xl 2xl:text-7xl ml-2">
+                      °C
+                    </div>
                   </div>
                   {WMO.map((obj, i) => {
                     return (
@@ -138,13 +143,13 @@ export default function Layout(weatherData: forecastType) {
                   {weatherData.userCity}
                 </div>
                 <div className="w-full flex pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14 2xl:ml-8">
-                  Čuti se kot {weatherData.hourly.apparent_temperature[getNow]}
+                  Zdi se kot {weatherData.hourly.apparent_temperature[getNow]}
                   °C
                 </div>
               </div>
               <HourlyForecast hourlyForecast={hourlyForecast} />
               <Line
-                className="mb-4 sm:px-2 md:px-4 lg:px-8 xl:px-8 2xl:px-10"
+                className="mb-4 mt-4 px-2 sm:px-2 md:px-4 lg:px-8 xl:px-8 2xl:px-10"
                 options={{
                   scales: {
                     x: {

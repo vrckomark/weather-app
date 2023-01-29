@@ -35,7 +35,7 @@ const DailyForecast = (props: any) => {
   }
   document.body.classList.add("overflow-x-hidden");
   dailyForecast = dailyForecast.slice(1);
-
+  console.log(dailyForecast);
   return (
     <>
       {dailyForecast.map((obj: any, i: number) => {
@@ -94,10 +94,10 @@ const DailyForecast = (props: any) => {
                     <>{obj.sunrise.getHours() + 1}</>
                   )}
                   :
-                  {obj.sunrise.getMinutes() + 1 < 10 ? (
-                    <>0{obj.sunrise.getMinutes() + 1}</>
+                  {obj.sunrise.getMinutes() < 10 ? (
+                    <>0{obj.sunrise.getMinutes()}</>
                   ) : (
-                    <>{obj.sunrise.getMinutes() + 1}</>
+                    <>{obj.sunrise.getMinutes()}</>
                   )}
                 </div>
                 <img
@@ -114,10 +114,10 @@ const DailyForecast = (props: any) => {
                     <>{obj.sunset.getHours() + 1}</>
                   )}
                   :
-                  {obj.sunset.getMinutes() + 1 < 10 ? (
-                    <>0{obj.sunset.getMinutes() + 1}</>
+                  {obj.sunset.getMinutes() < 10 ? (
+                    <>0{obj.sunset.getMinutes()}</>
                   ) : (
-                    <>{obj.sunset.getMinutes() + 1}</>
+                    <>{obj.sunset.getMinutes()}</>
                   )}
                 </div>
                 <img
