@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -49,6 +49,8 @@ const getTime = (time: Date) => {
 };
 
 export default function Layout(weatherData: forecastType) {
+  const [isCelsius, setIsCelsius] = useState<boolean>(true);
+
   const { width } = useWindowDimensions();
   const getNow = useMemo(() => {
     var timesUnix: any = [];
@@ -115,16 +117,21 @@ export default function Layout(weatherData: forecastType) {
         <main className="mt-8 text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
           <div className="flex flex-col justify-center items-center px-2">
             <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
-              <div className="col-span-8 flex flex-col justify-between px-6 pb-6 items-start 2xl:px-12">
-                <div className="flex items-center justify-between w-full ">
-                  <div className="flex items-center text-6xl lg:text-7xl 2xl:text-8xl">
-                    <div className="">
-                      {weatherData.current_weather.temperature}
-                    </div>
-                    <div className="text-5xl lg:text-6xl 2xl:text-7xl ml-2">
-                      °C
-                    </div>
-                  </div>
+              <div className="col-span-8 flex flex-col justify-between px-8 pb-6 items-start 2xl:px-12">
+                <div className="flex mt-6 pr-6 items-center justify-between w-full ">
+                  <button
+                    className="rounded-xl px-4 py-2 md:px-6 md:py-4 cursor-pointer border-2 sm:border-4 border-transparent hover:border-slate-300 transition-all transition-1000 text-5xl sm:text-6xl md:text-7xl 2xl:text-8xl flex items-center"
+                    onClick={() => setIsCelsius(!isCelsius)}
+                  >
+                    {isCelsius ? (
+                      <>{weatherData.current_weather.temperature}&nbsp;°C</>
+                    ) : (
+                      <>
+                        {weatherData.current_weather.temperature * 1.8 + 32}
+                        &nbsp;°F
+                      </>
+                    )}
+                  </button>
                   {WMO.map((obj, i) => {
                     return (
                       obj.weathercode ===
@@ -132,17 +139,17 @@ export default function Layout(weatherData: forecastType) {
                         <img
                           src={obj.hasNight && isNight ? obj.svgNight : obj.svg}
                           alt={obj.slug}
-                          className="w-1/4 mr-8 mt-4"
+                          className="w-1/4 "
                           key={i}
                         />
                       )
                     );
                   })}
                 </div>
-                <div className="w-max mb-4 flex pl-2 text-xl md:text-2xl lg:text-3xl 2xl:text-4xl 2xl:mb-14 2xl:ml-8">
+                <div className="w-max ml-6 mb-4 flex pl-2 text-xl md:text-2xl lg:text-3xl 2xl:text-4xl 2xl:mb-14 ">
                   {weatherData.userCity}
                 </div>
-                <div className="w-full flex pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14 2xl:ml-8">
+                <div className="w-full flex ml-2 sm:ml-4 md:ml-6 pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14">
                   Zdi se kot {weatherData.hourly.apparent_temperature[getNow]}
                   °C
                 </div>

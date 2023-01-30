@@ -35,7 +35,6 @@ const DailyForecast = (props: any) => {
   }
   document.body.classList.add("overflow-x-hidden");
   dailyForecast = dailyForecast.slice(1);
-  console.log(dailyForecast);
   return (
     <>
       {dailyForecast.map((obj: any, i: number) => {
