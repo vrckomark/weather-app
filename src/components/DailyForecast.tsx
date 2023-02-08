@@ -1,9 +1,13 @@
 import WMO from "../WMO.module";
 import ClearDay from "../assets/weather-icons/clear-day.svg";
 import ClearNight from "../assets/weather-icons/clear-night.svg";
+import { useContext } from "react";
+import { celsiusContext, toFahrenheit } from "./Layout";
 
 const DailyForecast = (props: any) => {
   const { weatherData, weekDays, weekDaysShort } = props;
+  const isCelsius = useContext(celsiusContext);
+
   var obj: any, svg: any;
   var dailyForecast: any = [];
 
@@ -49,24 +53,44 @@ const DailyForecast = (props: any) => {
               <>
                 <div className="flex flex-col items-end justify-between pr-4 md:pr-12 lg:pr-14 xl:pr-10">
                   <div className="text-xs xl:text-sm">Min</div>
-                  <div>{obj.tempMin}°C</div>
+                  <div>
+                    {isCelsius ? (
+                      <>{obj.tempMin}°C</>
+                    ) : (
+                      <>{toFahrenheit(obj.tempMin)}°F</>
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-col items-start pl-4 md:pl-12 lg:pl-14 xl:pl-10">
                   <div className="text-xs xl:text-sm">Max</div>
-                  <div>{obj.tempMax}°C</div>
+                  <div>
+                    {isCelsius ? (
+                      <>{obj.tempMax}°C</>
+                    ) : (
+                      <>{toFahrenheit(obj.tempMax)}°F</>
+                    )}
+                  </div>
                 </div>
               </>
             ) : (
               <>
                 <div className="flex flex-col items-end justify-between pr-4 md:pr-12 lg:pr-14 xl:pr-10">
-                  {obj.tempMin}°C
+                  {isCelsius ? (
+                    <>{obj.tempMin}°C</>
+                  ) : (
+                    <>{toFahrenheit(obj.tempMin)}°F</>
+                  )}
                 </div>
                 <div className="flex flex-col items-start pl-4 md:pl-12 lg:pl-14 xl:pl-10">
-                  {obj.tempMax}°C
+                  {isCelsius ? (
+                    <>{obj.tempMax}°C</>
+                  ) : (
+                    <>{toFahrenheit(obj.tempMax)}°F</>
+                  )}
                 </div>
               </>
             )}
-            <div className="flex justify-start pl-4">
+            <div className="flex justify-start ">
               {WMO.map((item, i: number) => {
                 return (
                   <div key={i}>
@@ -84,13 +108,13 @@ const DailyForecast = (props: any) => {
                 );
               })}
             </div>
-            <div className=" flex flex-col border-l-4 pl-2 border-amber-300 rounded-sm">
-              <div className="flex">
-                <div>
+            <div className="flex flex-col rounded-sm">
+              <div className="flex border-l-4 border-amber-300 pl-2">
+                <div className="w-14">
                   {obj.sunrise.getHours() + 1 < 10 ? (
-                    <>0{obj.sunrise.getHours() + 1}</>
+                    <>0{obj.sunrise.getHours()}</>
                   ) : (
-                    <>{obj.sunrise.getHours() + 1}</>
+                    <>{obj.sunrise.getHours()}</>
                   )}
                   :
                   {obj.sunrise.getMinutes() < 10 ? (
@@ -105,12 +129,12 @@ const DailyForecast = (props: any) => {
                   className="w-6 bg-white bg-opacity-30 rounded-full ml-1  md:ml-4"
                 />
               </div>
-              <div className="flex">
-                <div>
+              <div className="border-l-4 border-sky-600 pl-2 flex">
+                <div className="w-14">
                   {obj.sunset.getHours() + 1 < 10 ? (
-                    <>0{obj.sunset.getHours() + 1}</>
+                    <>0{obj.sunset.getHours()}</>
                   ) : (
-                    <>{obj.sunset.getHours() + 1}</>
+                    <>{obj.sunset.getHours()}</>
                   )}
                   :
                   {obj.sunset.getMinutes() < 10 ? (

@@ -15,6 +15,8 @@ export default interface forecastType {
     weathercode: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
+    sunrise: string[];
+    sunset: string[];
   };
   userCity: string;
 }
