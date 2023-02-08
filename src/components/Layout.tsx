@@ -37,8 +37,6 @@ const weekDays = [
   "Sobota",
 ];
 
-const currentTime: Date = new Date(Date.now());
-
 const getTime = (time: Date) => {
   let _temp: string = "";
   (time.getHours() + 1).toString().length < 2 ? (_temp += "0") : (_temp += "");
