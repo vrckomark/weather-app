@@ -178,7 +178,7 @@ export default function Layout(weatherData: forecastType) {
                 </button>
               </div>
             </div>
-            <main className="">
+            <main>
               <div className="flex flex-col justify-center items-center px-2">
                 <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
                   <div className="col-span-8 flex flex-col justify-between px-8 pb-6 items-start 2xl:px-12">
@@ -217,7 +217,7 @@ export default function Layout(weatherData: forecastType) {
                       {weatherData.userCity}
                     </div>
                     <div className="w-full flex ml-2 sm:ml-4 md:ml-6 pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14">
-                      Zdi se kot
+                      Zdi se kot{" "}
                       {isCelsius ? (
                         <>{weatherData.hourly.apparent_temperature[getNow]}°C</>
                       ) : (

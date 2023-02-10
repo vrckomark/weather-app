@@ -36,17 +36,17 @@ function App() {
         setIsLoading(false);
       });
 
-    // await axios // PRODUCTION
-    //   .get(
-    //     `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
-    //   )
-    //   .then((res) => {
-    //     setUserCity(res.data.user_city);
-    //     setIsLoading(false);
-    //   });
+    await axios // PRODUCTION
+      .get(
+        `https://vrechko-weather-proxy.deta.dev/fetch-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
+      )
+      .then((res) => {
+        setUserCity(res.data.user_city);
+        setIsLoading(false);
+      });
     // DEV
-    setUserCity("Maribor");
-    setIsLoading(false);
+    // setUserCity("Maribor");
+    // setIsLoading(false);
   }
 
   useEffect(() => {
