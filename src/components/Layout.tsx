@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState, useEffect } from "react";
+import { createContext, useMemo, useState, useEffect, useContext } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -17,6 +17,7 @@ import DailyForecast from "./DailyForecast";
 import forecastType from "../types/ForecastType";
 import Footer from "./Footer";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import { userCityContext } from "../App";
 
 ChartJS.register(
   LineElement,
@@ -50,6 +51,7 @@ export const twilightContext = createContext({
 
 export default function Layout(weatherData: forecastType) {
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
+  const userCity = useContext(userCityContext);
 
   const [twilight, setTwilight] = useState<any>({
     sunriseTimes: [],
@@ -178,7 +180,7 @@ export default function Layout(weatherData: forecastType) {
                   <div className="col-span-8 flex flex-col justify-between px-8 pb-6 items-start 2xl:px-12">
                     <div className="text-xl flex justify-center items-center md:text-2xl lg:text-3xl 2xl:text-3xl lg:px-6 2xl:mb-14  rounded-full px-4 py-2 bg-sky-600 -translate-y-6">
                       <HiLocationMarker />
-                      <div className="ml-2">{weatherData.userCity}</div>
+                      <div className="ml-2">{userCity}</div>
                     </div>
                     <div className="flex pr-6 items-center justify-between w-full ">
                       <div className="rounded-xl px-4 py-2 md:px-6 md:py-4 text-5xl sm:text-6xl md:text-7xl 2xl:text-8xl flex items-center">

@@ -61,7 +61,10 @@ const HourlyForecast = ({ hourlyForecast }: any) => {
                 />
               ) : null;
             })}
-            <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
+            <div
+              className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl"
+              key={i}
+            >
               {isCelsius ? (
                 <>{obj.temperature_2m}°C</>
               ) : (
@@ -70,7 +73,7 @@ const HourlyForecast = ({ hourlyForecast }: any) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center items-center" key={i}>
             {WMO.map((item: any) => {
               return item.weathercode === obj.weathercode ? (
                 <img
@@ -85,7 +88,10 @@ const HourlyForecast = ({ hourlyForecast }: any) => {
                 />
               ) : null;
             })}
-            <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
+            <div
+              className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl"
+              key={i}
+            >
               {isCelsius ? (
                 <>{obj.temperature_2m}°C</>
               ) : (
