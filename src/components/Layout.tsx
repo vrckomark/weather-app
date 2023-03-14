@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from "chart.js";
 
+import { HiLocationMarker } from "react-icons/hi";
 import WMO from "../WMO.module";
 import HourlyForecast, { isSameDay } from "./HourlyForecast";
 import DailyForecast from "./DailyForecast";
@@ -37,21 +38,14 @@ const weekDays = [
   "Sobota",
 ];
 
-const getTime = (time: Date) => {
-  let _temp: string = "";
-  (time.getHours() + 1).toString().length < 2 ? (_temp += "0") : (_temp += "");
-  time.getHours() === 23 ? (_temp += "00") : (_temp += time.getHours() + 1);
-  return _temp + ":00";
-};
-
 export const toFahrenheit = (celsius: number) => {
   return Math.round((celsius * 1.8 + 32) * 10) / 10;
 };
 
 export const celsiusContext = createContext(true);
 export const twilightContext = createContext({
-  sunriseTimes: [],
-  sunsetTimes: [],
+  sunriseTimes: [] as any,
+  sunsetTimes: [] as any,
 });
 
 export default function Layout(weatherData: forecastType) {
@@ -163,7 +157,7 @@ export default function Layout(weatherData: forecastType) {
         <celsiusContext.Provider value={isCelsius}>
           <div className="flex flex-col text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
             <div className=" flex justify-end mt-6">
-              <div className="mr-10 mb-1">
+              <div className="mr-6 mb-2">
                 <button
                   onClick={() => setIsCelsius(true)}
                   className="px-6 border-r-2 hover:bg-white hover:bg-opacity-20 rounded-l-xl"
@@ -182,7 +176,11 @@ export default function Layout(weatherData: forecastType) {
               <div className="flex flex-col justify-center items-center px-2">
                 <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
                   <div className="col-span-8 flex flex-col justify-between px-8 pb-6 items-start 2xl:px-12">
-                    <div className="flex mt-6 pr-6 items-center justify-between w-full ">
+                    <div className="text-xl flex justify-center items-center md:text-2xl lg:text-3xl 2xl:text-3xl lg:px-6 2xl:mb-14  rounded-full px-4 py-2 bg-sky-600 -translate-y-6">
+                      <HiLocationMarker />
+                      <div className="ml-2">Maribor{weatherData.userCity}</div>
+                    </div>
+                    <div className="flex pr-6 items-center justify-between w-full ">
                       <div className="rounded-xl px-4 py-2 md:px-6 md:py-4 text-5xl sm:text-6xl md:text-7xl 2xl:text-8xl flex items-center">
                         {isCelsius ? (
                           <>{weatherData.current_weather.temperature}&nbsp;°C</>
@@ -213,9 +211,7 @@ export default function Layout(weatherData: forecastType) {
                         );
                       })}
                     </div>
-                    <div className="w-max ml-6 mb-4 flex pl-2 text-xl md:text-2xl lg:text-3xl 2xl:text-4xl 2xl:mb-14 ">
-                      {weatherData.userCity}
-                    </div>
+
                     <div className="w-full flex ml-2 sm:ml-4 md:ml-6 pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14">
                       Zdi se kot{" "}
                       {isCelsius ? (
@@ -232,7 +228,7 @@ export default function Layout(weatherData: forecastType) {
                   </div>
                   <HourlyForecast hourlyForecast={hourlyForecast} />
                   <Line
-                    className="mb-4 mt-4 px-2 sm:px-2 md:px-4 lg:px-8 xl:px-8 2xl:px-10"
+                    className="mb-4 mt-4 px-[2vw]"
                     options={{
                       scales: {
                         x: {
@@ -292,7 +288,7 @@ export default function Layout(weatherData: forecastType) {
                     }}
                     data={{
                       labels: hourlyForecast.map((obj: any) => {
-                        return getTime(obj.time);
+                        return `${obj.time.getHours()}:00`;
                       }),
                       datasets: [
                         {

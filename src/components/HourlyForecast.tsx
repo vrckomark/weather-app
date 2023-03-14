@@ -21,72 +21,82 @@ export const isSameDay = (date1: Date, date2: Date) => {
 const HourlyForecast = ({ hourlyForecast }: any) => {
   const isCelsius = useContext(celsiusContext);
   const twilight = useContext(twilightContext);
-
+  // console.log(twilight);
   const isNight = (time: Date) => {
-    for (const sunriseTime of twilight.sunriseTimes) {
-      const idx = twilight.sunriseTimes.indexOf(sunriseTime);
-      if (isSameDay(sunriseTime, time)) {
-        if (twilight.sunsetTimes[idx] < time) {
-          return true;
-        } else if (twilight.sunriseTimes[idx] > time) {
-          return true;
-        } else {
-          return false;
+    if (twilight) {
+      for (const sunsetTime of twilight.sunsetTimes) {
+        const i = twilight.sunsetTimes.indexOf(sunsetTime);
+        if (isSameDay(time, sunsetTime)) {
+          if (time.getHours() >= sunsetTime.getHours()) {
+            return true;
+          }
+          if (time.getHours() <= twilight.sunriseTimes[i].getHours()) {
+            return true;
+          }
         }
       }
     }
+    return false;
   };
 
-  return hourlyForecast.map((obj: hourlyObj, i: number) => {
-    return isNight(obj.time) ? (
-      <div
-        className="bg-black bg-opacity-30  py-6 flex flex-col justify-center items-center "
-        key={i}
-      >
-        {WMO.map((item: any) => {
-          return item.weathercode === obj.weathercode ? (
-            <img
-              src={
-                item.hasNight && isNight(obj.time) ? item.svgNight : item.svg
-              }
-              alt={item.slug}
-              className="w-3/4 flex justify-center"
-              key={i}
-            />
-          ) : null;
-        })}
-        <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
-          {isCelsius ? (
-            <>{obj.temperature_2m}°C</>
-          ) : (
-            <>{toFahrenheit(obj.temperature_2m)}°F</>
-          )}
-        </div>
-      </div>
-    ) : (
-      <div className="flex flex-col justify-center items-center">
-        {WMO.map((item: any) => {
-          return item.weathercode === obj.weathercode ? (
-            <img
-              src={
-                item.hasNight && isNight(obj.time) ? item.svgNight : item.svg
-              }
-              alt={item.slug}
-              className="w-3/4 flex justify-center"
-              key={i}
-            />
-          ) : null;
-        })}
-        <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
-          {isCelsius ? (
-            <>{obj.temperature_2m}°C</>
-          ) : (
-            <>{toFahrenheit(obj.temperature_2m)}°F</>
-          )}
-        </div>
-      </div>
-    );
-  });
+  return (
+    <>
+      {hourlyForecast.map((obj: hourlyObj, i: number) => {
+        return isNight(obj.time) ? (
+          <div
+            className="bg-black bg-opacity-30  py-6 flex flex-col justify-center items-center "
+            key={i}
+          >
+            {WMO.map((item: any) => {
+              return item.weathercode === obj.weathercode ? (
+                <img
+                  src={
+                    item.hasNight && isNight(obj.time)
+                      ? item.svgNight
+                      : item.svg
+                  }
+                  alt={item.slug}
+                  className="w-3/4 flex justify-center"
+                  key={i}
+                />
+              ) : null;
+            })}
+            <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
+              {isCelsius ? (
+                <>{obj.temperature_2m}°C</>
+              ) : (
+                <>{toFahrenheit(obj.temperature_2m)}°F</>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col justify-center items-center">
+            {WMO.map((item: any) => {
+              return item.weathercode === obj.weathercode ? (
+                <img
+                  src={
+                    item.hasNight && isNight(obj.time)
+                      ? item.svgNight
+                      : item.svg
+                  }
+                  alt={item.slug}
+                  className="w-3/4 flex justify-center"
+                  key={i}
+                />
+              ) : null;
+            })}
+            <div className="text-sm flex justify-center xl:text-2xl sm:text-lg lg:text-xl 2xl:text-2xl">
+              {isCelsius ? (
+                <>{obj.temperature_2m}°C</>
+              ) : (
+                <>{toFahrenheit(obj.temperature_2m)}°F</>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
 };
 
 export default HourlyForecast;
