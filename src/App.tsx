@@ -4,7 +4,7 @@ import { useGeolocated } from "react-geolocated";
 import { BiSearch } from "react-icons/bi";
 import axios from "axios";
 import Layout from "./components/Layout";
-import { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CardSkeleton from "./components/CardSkeleton";
 
@@ -74,7 +74,7 @@ function App() {
     ) {
       await axios // PRODUCTION https://proxy-1-w1428275.deta.app
         .get(
-          `https://proxy-1-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
+          `http://localhost:8888/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
         .then((res) => {
           console.log(res.data);
@@ -98,9 +98,7 @@ function App() {
     e.preventDefault();
     setIsLoading(true);
     await axios
-      .get(
-        `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
-      )
+      .get(`http://localhost:8888/fetch-geocode?input_city=${inputCity}`)
       .then((result) => {
         console.log(result.data);
         setCoordinates({
@@ -121,8 +119,8 @@ function App() {
         <div className="text-2xl text-white">
           <SkeletonTheme
             baseColor={isNight ? "#2f4d6a" : "#1fb6e0"}
-            highlightColor={isNight ? "#4a79a5" : "#6acfeb"}
-            duration={0.75}
+            highlightColor={"#64c7e3"}
+            duration={1}
           >
             <div className="flex flex-col w-screen items-center mt-6">
               <div className="absolute right-2 top-2 xl:text-3xl xl:right-6 xl:top-6">
@@ -147,7 +145,7 @@ function App() {
                   <input
                     type="text"
                     name="inputCity"
-                    className="bg-transparent border-4 border-sky-200 rounded-full w-full focus:outline-offset-2 focus:outline-sky-200 pl-6 pr-10 md:pr-12 py-2 placeholder:text-sky-200 xl:pl-10 lg:py-3 lg:text-3xl lg:pl-8 xl:py-4"
+                    className="bg-transparent border-4 border-white rounded-full w-full focus:outline-offset-2 focus:outline-white pl-6 pr-10 md:pr-12 py-2 placeholder:text-sky-200 xl:pl-10 lg:py-3 lg:text-3xl lg:pl-8 xl:py-4"
                     onChange={(e) => setInputCity(e.target.value)}
                     value={inputCity}
                     placeholder="Enter city name"
@@ -156,7 +154,7 @@ function App() {
                     type="submit"
                     className="lg:scale-125 md:-translate-x-12 -translate-x-10"
                   >
-                    <BiSearch className="" />
+                    <BiSearch />
                   </button>
                 </form>
               </div>
@@ -171,11 +169,8 @@ function App() {
                   Vaš brskalnik ne podpira lokacije
                 </div>
               )}
-              {isLoading && isGeolocationEnabled ? <CardSkeleton /> : null}
 
-              {coordinates && (
-                <div>{weatherData && <Layout {...weatherDataProp} />}</div>
-              )}
+              {isLoading ? <CardSkeleton /> : <Layout {...weatherDataProp} />}
             </div>
           </SkeletonTheme>
         </div>
