@@ -2,7 +2,8 @@ import WMO from "../WMO.module";
 import ClearDay from "../assets/weather-icons/clear-day.svg";
 import ClearNight from "../assets/weather-icons/clear-night.svg";
 import { useContext } from "react";
-import { celsiusContext, toFahrenheit } from "./Layout";
+import { toFahrenheit } from "./Layout";
+import { celsiusContext } from "../App";
 
 const DailyForecast = (props: any) => {
   const { weatherData, weekDays, weekDaysShort } = props;

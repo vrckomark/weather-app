@@ -17,7 +17,7 @@ import DailyForecast from "./DailyForecast";
 import forecastType from "../types/ForecastType";
 import Footer from "./Footer";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { userCityContext } from "../App";
+import { celsiusContext, userCityContext } from "../App";
 
 ChartJS.register(
   LineElement,
@@ -43,15 +43,14 @@ export const toFahrenheit = (celsius: number) => {
   return Math.round((celsius * 1.8 + 32) * 10) / 10;
 };
 
-export const celsiusContext = createContext(true);
 export const twilightContext = createContext({
   sunriseTimes: [] as any,
   sunsetTimes: [] as any,
 });
 
 export default function Layout(weatherData: forecastType) {
-  const [isCelsius, setIsCelsius] = useState<boolean>(true);
   const userCity = useContext(userCityContext);
+  const isCelsius = useContext(celsiusContext);
 
   const [twilight, setTwilight] = useState<any>({
     sunriseTimes: [],
@@ -156,179 +155,162 @@ export default function Layout(weatherData: forecastType) {
   return weatherData ? (
     <div>
       <twilightContext.Provider value={twilight}>
-        <celsiusContext.Provider value={isCelsius}>
-          <div className="flex flex-col text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
-            <div className=" flex justify-end mt-6">
-              <div className="mr-6 mb-2">
-                <button
-                  onClick={() => setIsCelsius(true)}
-                  className="px-6 border-r-2 hover:bg-white hover:bg-opacity-20 rounded-l-xl"
-                >
-                  C
-                </button>
-                <button
-                  onClick={() => setIsCelsius(false)}
-                  className="px-6 border-l-2 hover:bg-white hover:bg-opacity-20 rounded-r-xl"
-                >
-                  F
-                </button>
-              </div>
-            </div>
-            <main>
-              <div className="flex flex-col justify-center items-center px-2">
-                <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
-                  <div className="col-span-8 flex flex-col justify-between px-8 pb-6 items-start 2xl:px-12">
-                    <div className="text-xl flex justify-center items-center md:text-2xl lg:text-3xl 2xl:text-3xl lg:px-6 2xl:mb-14  rounded-full px-4 py-2 bg-sky-600 -translate-y-6">
-                      <HiLocationMarker />
-                      <div className="ml-2">{userCity}</div>
-                    </div>
-                    <div className="flex pr-6 items-center justify-between w-full ">
-                      <div className="rounded-xl px-4 py-2 md:px-6 md:py-4 text-5xl sm:text-6xl md:text-7xl 2xl:text-8xl flex items-center">
-                        {isCelsius ? (
-                          <>{weatherData.current_weather.temperature}&nbsp;°C</>
-                        ) : (
-                          <>
-                            {toFahrenheit(
-                              weatherData.current_weather.temperature
-                            )}
-                            &nbsp;°F
-                          </>
-                        )}
-                      </div>
-                      {WMO.map((obj, i) => {
-                        return (
-                          obj.weathercode ===
-                            weatherData.current_weather.weathercode && (
-                            <img
-                              src={
-                                obj.hasNight && isNight(new Date(Date.now()))
-                                  ? obj.svgNight
-                                  : obj.svg
-                              }
-                              alt={obj.slug}
-                              className="w-1/4 "
-                              key={i}
-                            />
-                          )
-                        );
-                      })}
-                    </div>
-
-                    <div className="w-full flex ml-2 sm:ml-4 md:ml-6 pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14">
-                      Zdi se kot{" "}
+        <div className="flex flex-col text-2xl text-white sm:text-3xl sm:mx-8 md:mx-14 lg:text-4xl lg:mx-24 xl:mx-64 2xl:text-5xl 2xl:mx-80">
+          <div className=" flex justify-end mt-6"></div>
+          <main>
+            <div className="flex flex-col justify-center items-center px-2">
+              <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
+                <div className="col-span-8 flex flex-col justify-between px-8 pb-6 items-start 2xl:px-12">
+                  <div className="text-xl flex justify-center items-center md:text-2xl lg:text-3xl 2xl:text-3xl lg:px-6 2xl:mb-14  rounded-full px-4 py-2 bg-sky-600 -translate-y-6 -translate-x-6">
+                    <HiLocationMarker />
+                    <div className="ml-2">{userCity}</div>
+                  </div>
+                  <div className="flex pr-6 items-center justify-between w-full ">
+                    <div className="rounded-xl px-4 py-2 md:px-6 md:py-4 text-5xl sm:text-6xl md:text-7xl 2xl:text-8xl flex items-center">
                       {isCelsius ? (
-                        <>{weatherData.hourly.apparent_temperature[getNow]}°C</>
+                        <>{weatherData.current_weather.temperature}&nbsp;°C</>
                       ) : (
                         <>
                           {toFahrenheit(
-                            weatherData.hourly.apparent_temperature[getNow]
+                            weatherData.current_weather.temperature
                           )}
-                          °F
+                          &nbsp;°F
                         </>
                       )}
                     </div>
+                    {WMO.map((obj, i) => {
+                      return (
+                        obj.weathercode ===
+                          weatherData.current_weather.weathercode && (
+                          <img
+                            src={
+                              obj.hasNight && isNight(new Date(Date.now()))
+                                ? obj.svgNight
+                                : obj.svg
+                            }
+                            alt={obj.slug}
+                            className="w-1/4 "
+                            key={i}
+                          />
+                        )
+                      );
+                    })}
                   </div>
-                  <HourlyForecast hourlyForecast={hourlyForecast} />
-                  <Line
-                    className="mb-4 mt-4 px-[2vw]"
-                    options={{
-                      scales: {
-                        x: {
-                          grid: {
-                            display: false,
-                            drawTicks: false,
-                            borderWidth: 0,
-                          },
-                          ticks: {
-                            color: "white",
-                            font: {
-                              size:
-                                width > 1024
-                                  ? 20
-                                  : width > 768 && width < 1024
-                                  ? 18
-                                  : 16,
-                            },
-                          },
-                        },
-                        y: {
-                          grid: {
-                            display: false,
-                            drawTicks: false,
-                            borderWidth: 0,
-                          },
-                          ticks: {
-                            color: "rgba(0,0,0,0)",
-                          },
-                        },
-                      },
-                      responsive: true,
-                      plugins: {
-                        tooltip: {
-                          enabled: false,
-                          // backgroundColor: "rgba(0, 0, 0,0.4)",
-                          // bodyColor: "white",
 
-                          // titleSpacing: 4,
-                          // titleFont: {
-                          //   size: 16,
-                          // },
-                          // bodyFont: {
-                          //   size: 22,
-                          // },
-                          // displayColors: false,
-                          // padding: 16,
-                          // titleAlign: "center",
-                          // bodyAlign: "center",
-                          // callbacks: {
-                          //   label: function (context) {
-                          //     return context.formattedValue + "°C";
-                          //   },
-                          // },
+                  <div className="w-full flex ml-2 sm:ml-4 md:ml-6 pl-2 lg:text-3xl 2xl:text-4xl 2xl:mb-14">
+                    Zdi se kot{" "}
+                    {isCelsius ? (
+                      <>{weatherData.hourly.apparent_temperature[getNow]}°C</>
+                    ) : (
+                      <>
+                        {toFahrenheit(
+                          weatherData.hourly.apparent_temperature[getNow]
+                        )}
+                        °F
+                      </>
+                    )}
+                  </div>
+                </div>
+                <HourlyForecast hourlyForecast={hourlyForecast} />
+                <Line
+                  className="mb-4 mt-4 px-[2vw]"
+                  options={{
+                    scales: {
+                      x: {
+                        grid: {
+                          display: false,
+                          drawTicks: false,
+                          borderWidth: 0,
+                        },
+                        ticks: {
+                          color: "white",
+                          font: {
+                            size:
+                              width > 1024
+                                ? 20
+                                : width > 768 && width < 1024
+                                ? 18
+                                : 16,
+                          },
                         },
                       },
-                    }}
-                    data={{
-                      labels: hourlyForecast.map((obj: any) => {
-                        return `${obj.time.getHours()}:00`;
-                      }),
-                      datasets: [
-                        {
-                          data: hourlyForecast.map((obj: any) => {
-                            return obj.temperature_2m;
-                          }),
-                          borderColor: "white",
-                          backgroundColor: "white",
-                          cubicInterpolationMode: "monotone",
-                          borderWidth: 3,
-                          pointRadius: 2,
-                          hoverBackgroundColor: "white",
-                          pointHitRadius: 15,
+                      y: {
+                        grid: {
+                          display: false,
+                          drawTicks: false,
+                          borderWidth: 0,
                         },
-                      ],
-                    }}
-                    height={
-                      width < 640
-                        ? 60
-                        : width < 768 && width > 640
-                        ? 52
-                        : width > 768 && width < 1024
-                        ? 45
-                        : 40
-                    }
-                  />
-                </div>
-                <div className="flex flex-col w-full">
-                  <DailyForecast
-                    weatherData={weatherData}
-                    weekDaysShort={weekDaysShort}
-                    weekDays={weekDays}
-                  />
-                </div>
+                        ticks: {
+                          color: "rgba(0,0,0,0)",
+                        },
+                      },
+                    },
+                    responsive: true,
+                    plugins: {
+                      tooltip: {
+                        enabled: false,
+                        // backgroundColor: "rgba(0, 0, 0,0.4)",
+                        // bodyColor: "white",
+
+                        // titleSpacing: 4,
+                        // titleFont: {
+                        //   size: 16,
+                        // },
+                        // bodyFont: {
+                        //   size: 22,
+                        // },
+                        // displayColors: false,
+                        // padding: 16,
+                        // titleAlign: "center",
+                        // bodyAlign: "center",
+                        // callbacks: {
+                        //   label: function (context) {
+                        //     return context.formattedValue + "°C";
+                        //   },
+                        // },
+                      },
+                    },
+                  }}
+                  data={{
+                    labels: hourlyForecast.map((obj: any) => {
+                      return `${obj.time.getHours()}:00`;
+                    }),
+                    datasets: [
+                      {
+                        data: hourlyForecast.map((obj: any) => {
+                          return obj.temperature_2m;
+                        }),
+                        borderColor: "white",
+                        backgroundColor: "white",
+                        cubicInterpolationMode: "monotone",
+                        borderWidth: 3,
+                        pointRadius: 2,
+                        hoverBackgroundColor: "white",
+                        pointHitRadius: 15,
+                      },
+                    ],
+                  }}
+                  height={
+                    width < 640
+                      ? 60
+                      : width < 768 && width > 640
+                      ? 52
+                      : width > 768 && width < 1024
+                      ? 45
+                      : 40
+                  }
+                />
               </div>
-            </main>
-          </div>
-        </celsiusContext.Provider>
+              <div className="flex flex-col w-full">
+                <DailyForecast
+                  weatherData={weatherData}
+                  weekDaysShort={weekDaysShort}
+                  weekDays={weekDays}
+                />
+              </div>
+            </div>
+          </main>
+        </div>
       </twilightContext.Provider>
       <Footer />
     </div>

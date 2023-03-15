@@ -1,6 +1,7 @@
 import { useContext } from "react";
+import { celsiusContext } from "../App";
 import WMO from "../WMO.module";
-import { celsiusContext, twilightContext } from "./Layout";
+import { twilightContext } from "./Layout";
 import { toFahrenheit } from "./Layout";
 
 type hourlyObj = {
