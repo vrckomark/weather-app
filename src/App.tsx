@@ -96,7 +96,7 @@ function App() {
 
   const _handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Fetch coords of city");
+    setIsLoading(true);
     await axios
       .get(
         `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
