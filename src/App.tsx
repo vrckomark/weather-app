@@ -4,7 +4,7 @@ import { useGeolocated } from "react-geolocated";
 import { BiSearch } from "react-icons/bi";
 import axios from "axios";
 import Layout from "./components/Layout";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CardSkeleton from "./components/CardSkeleton";
 
