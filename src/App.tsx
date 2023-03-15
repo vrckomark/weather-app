@@ -74,7 +74,7 @@ function App() {
     ) {
       await axios // PRODUCTION https://proxy-1-w1428275.deta.app
         .get(
-          `http://localhost:8888/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
+          `https://proxy-1-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
         .then((res) => {
           console.log(res.data);
@@ -98,7 +98,9 @@ function App() {
     e.preventDefault();
     setIsLoading(true);
     await axios
-      .get(`http://localhost:8888/fetch-geocode?input_city=${inputCity}`)
+      .get(
+        `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
+      )
       .then((result) => {
         console.log(result.data);
         setCoordinates({
