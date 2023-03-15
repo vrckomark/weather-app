@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, createContext } from "react";
 import { useGeolocated } from "react-geolocated";
-import { BiSearch } from "react-icons/bi";
+import { BiCurrentLocation, BiSearch } from "react-icons/bi";
 import axios from "axios";
 import Layout from "./components/Layout";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -26,7 +26,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [inputCity, setInputCity] = useState<string>("");
 
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+  const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } =
     useGeolocated({
       positionOptions: {
         enableHighAccuracy: true,
@@ -60,21 +60,13 @@ function App() {
         setIsLoading(false);
       });
 
-    // await axios // PRODUCTION
-    //   .get(
-    //     `https://vrechko-weather-proxy.deta.dev/fetch-reverse-geocode?lat=${coords?.latitude}&lon=${coords?.longitude}`
-    //   )
-    //   .then((res) => {
-    //     setUserCity(res.data.user_city);
-    //     setIsLoading(false);
-    //   });
     if (
       coords?.latitude === coordinates.latitude &&
       coords?.longitude === coordinates.longitude
     ) {
       await axios // PRODUCTION https://proxy-1-w1428275.deta.app
         .get(
-          `https://proxy-1-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
+          `http://localhost:8888/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
         .then((res) => {
           console.log(res.data);
@@ -98,9 +90,7 @@ function App() {
     e.preventDefault();
     setIsLoading(true);
     await axios
-      .get(
-        `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
-      )
+      .get(`http://localhost:8888/fetch-geocode?input_city=${inputCity}`)
       .then((result) => {
         console.log(result.data);
         setCoordinates({
@@ -140,8 +130,14 @@ function App() {
                 </button>
               </div>
               <div className="mt-8 flex w-full justify-center items-center mb-4 xl:mb-8">
+                <button
+                  className="scale-125 ml-6 mr-4 md:scale-150"
+                  onClick={getPosition}
+                >
+                  <BiCurrentLocation />
+                </button>
                 <form
-                  className="px-4 flex w-full sm:w-2/3  justify-center items-center xl:w-1/2"
+                  className="flex w-full sm:w-2/3  justify-center items-center xl:w-1/2"
                   onSubmit={_handleSubmit}
                 >
                   <input
