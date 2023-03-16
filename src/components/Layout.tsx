@@ -122,7 +122,9 @@ export default function Layout(weatherData: forecastType) {
 
   var obj: any, svg: any;
   var hourlyForecast: any = [];
+
   timesUnix.forEach((time: any, i: number) => {
+    // črna magija
     if (i >= now - 1 && i <= now + 7) {
       time = new Date(time);
       WMO.map((item: any) => {
@@ -216,7 +218,7 @@ export default function Layout(weatherData: forecastType) {
                 </div>
                 <HourlyForecast hourlyForecast={hourlyForecast} />
                 <Line
-                  className="mb-4 mt-4 px-[2vw]"
+                  className=" mt-4 px-[2vw]"
                   options={{
                     scales: {
                       x: {
@@ -275,9 +277,7 @@ export default function Layout(weatherData: forecastType) {
                     },
                   }}
                   data={{
-                    labels: hourlyForecast.map((obj: any) => {
-                      return `${obj.time.getHours()}:00`;
-                    }),
+                    labels: new Array(8).fill(""),
                     datasets: [
                       {
                         data: hourlyForecast.map((obj: any) => {

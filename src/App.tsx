@@ -69,7 +69,7 @@ function App() {
           `https://proxy-1-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.user_city) setUserCity(res.data.user_city);
           setIsLoading(false);
         });
@@ -94,7 +94,7 @@ function App() {
         `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
       )
       .then((result) => {
-        console.log(result.data);
+        // console.log(result.data);
         setCoordinates({
           longitude: result.data.coords.longitude,
           latitude: result.data.coords.latitude,
@@ -104,7 +104,7 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(weatherData);
+    // console.log(weatherData);
   }, [weatherData]);
 
   return (

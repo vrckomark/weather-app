@@ -114,9 +114,9 @@ const DailyForecast = (props: any) => {
                 <img
                   src={ClearDay}
                   alt="clear-day"
-                  className="w-6 bg-white bg-opacity-5 rounded-full ml-1  md:ml-4"
+                  className="w-6 bg-white bg-opacity-5 rounded-full ml-1 md:ml-4 sm:mr-2"
                 />
-                <div className="flex border-l-4 border-amber-300 pl-2">
+                <div className="flex border-l-4 border-amber-300  pl-1 sm:pl-2 ">
                   <div className="w-14">
                     {obj.sunrise.getHours() + 1 < 10 ? (
                       <>0{obj.sunrise.getHours()}</>
@@ -132,13 +132,13 @@ const DailyForecast = (props: any) => {
                   </div>
                 </div>
               </div>
-              <div className="flex">
+              <div className="flex ">
                 <img
                   src={ClearNight}
                   alt="clear-night"
-                  className="w-6 bg-white bg-opacity-5 rounded-full ml-1 md:ml-4"
+                  className="w-6 bg-white bg-opacity-5 rounded-full ml-1 md:ml-4 sm:mr-2"
                 />
-                <div className="border-l-4 border-sky-600 pl-2 flex">
+                <div className="border-l-4 border-sky-600 pl-1 sm:pl-2 flex">
                   <div className="w-14">
                     {obj.sunset.getHours() + 1 < 10 ? (
                       <>0{obj.sunset.getHours()}</>
