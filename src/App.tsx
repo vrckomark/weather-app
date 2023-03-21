@@ -23,7 +23,7 @@ function App() {
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
   const [userCity, setUserCity] = useState<string>("");
   const [weatherData, setWeatherData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputCity, setInputCity] = useState<string>("");
 
   const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } =
@@ -47,10 +47,18 @@ function App() {
       });
   }, [coords]);
 
+  // useEffect(() => {
+  //   if (!isGeolocationEnabled) {
+  //     setIsLoading(false);
+  //   }
+  // }, [isGeolocationEnabled]);
+
   // const geoLocationReady =
   //   isGeolocationAvailable && isGeolocationEnabled && !!coords;
 
   async function getData() {
+    setIsLoading(true);
+
     await axios
       .get(
         `https://api.open-meteo.com/v1/forecast?latitude=${coordinates?.latitude}&longitude=${coordinates?.longitude}&current_weather=true&hourly=weathercode,apparent_temperature,temperature_2m&daily=temperature_2m_max,temperature_2m_min,weathercode,sunrise,sunset&timezone=auto`
@@ -79,6 +87,7 @@ function App() {
     // setUserCity("Maribor");
     // setIsLoading(false);
   }
+  console.log(coordinates);
 
   useEffect(() => {
     if (coordinates.latitude !== undefined) getData();
@@ -103,10 +112,6 @@ function App() {
       });
   };
 
-  useEffect(() => {
-    // console.log(weatherData);
-  }, [weatherData]);
-
   return (
     <celsiusContext.Provider value={isCelsius}>
       <userCityContext.Provider value={userCity}>
@@ -117,16 +122,16 @@ function App() {
             duration={1}
           >
             <div className="flex flex-col w-screen items-center mt-6">
-              <div className="absolute right-2 top-2 xl:text-3xl xl:right-6 xl:top-6">
+              <div className="absolute right-2 top-2 xl:text-3xl xl:right-6 xl:top-6 ">
                 <button
                   onClick={() => setIsCelsius(true)}
-                  className="px-6 border-r-2 hover:bg-white hover:bg-opacity-20 rounded-l-xl"
+                  className="px-6 border-r-2 hover:bg-white hover:bg-opacity-20 rounded-l-xl transition-all duration-150"
                 >
                   C
                 </button>
                 <button
                   onClick={() => setIsCelsius(false)}
-                  className="px-6 border-l-2 hover:bg-white hover:bg-opacity-20 rounded-r-xl"
+                  className="px-6 border-l-2 hover:bg-white hover:bg-opacity-20 rounded-r-xl transition-all duration-150"
                 >
                   F
                 </button>
@@ -170,7 +175,11 @@ function App() {
                 </div>
               )}
 
-              {isLoading ? <CardSkeleton /> : <Layout {...weatherDataProp} />}
+              {isLoading ? (
+                <CardSkeleton />
+              ) : (
+                weatherData && <Layout {...weatherDataProp} />
+              )}
             </div>
           </SkeletonTheme>
         </div>

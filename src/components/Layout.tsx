@@ -213,7 +213,7 @@ export default function Layout(weatherData: forecastType) {
                     )}
                   </div>
                   <div className="text-base md:text-xl mt-8 justify-center flex items-center w-full translate-y-3">
-                    Danes
+                    <div className="bg-sky-900  rounded-full px-4">Danes</div>
                   </div>
                 </div>
                 <HourlyForecast hourlyForecast={hourlyForecast} />
