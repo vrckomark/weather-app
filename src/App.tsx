@@ -97,19 +97,22 @@ function App() {
 
   const _handleSubmit = async (e: any) => {
     e.preventDefault();
-    setIsLoading(true);
-    await axios
-      .get(
-        `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
-      )
-      .then((result) => {
-        // console.log(result.data);
-        setCoordinates({
-          longitude: result.data.coords.longitude,
-          latitude: result.data.coords.latitude,
+    const city = inputCity.trim();
+    if (city !== "") {
+      setIsLoading(true);
+      await axios
+        .get(
+          `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
+        )
+        .then((result) => {
+          // console.log(result.data);
+          setCoordinates({
+            longitude: result.data.coords.longitude,
+            latitude: result.data.coords.latitude,
+          });
+          setUserCity(result.data.name);
         });
-        setUserCity(result.data.name);
-      });
+    }
   };
 
   return (
