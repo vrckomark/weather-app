@@ -87,7 +87,6 @@ function App() {
     // setUserCity("Maribor");
     // setIsLoading(false);
   }
-  console.log(coordinates);
 
   useEffect(() => {
     if (coordinates.latitude !== undefined) getData();
