@@ -74,10 +74,9 @@ function App() {
     ) {
       await axios // PRODUCTION https://proxy-1-w1428275.deta.app
         .get(
-          `https://proxy-1-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
+          `https://proxy-2-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
         .then((res) => {
-          // console.log(res.data);
           if (res.data.user_city) setUserCity(res.data.user_city);
           setIsLoading(false);
         });
@@ -101,7 +100,7 @@ function App() {
       setIsLoading(true);
       await axios
         .get(
-          `https://proxy-1-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
+          `https://proxy-2-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
         )
         .then((result) => {
           // console.log(result.data);
