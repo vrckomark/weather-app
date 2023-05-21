@@ -154,6 +154,15 @@ export default function Layout(weatherData: forecastType) {
   });
   hourlyForecast = hourlyForecast.slice(1);
 
+  const getTime = (time: Date) => {
+    let _temp: string = "";
+    (time.getHours() + 1).toString().length < 2
+      ? (_temp += "0")
+      : (_temp += "");
+    time.getHours() === 23 ? (_temp += "00") : (_temp += time.getHours() + 1);
+    return _temp + ":00";
+  };
+
   return weatherData ? (
     <div>
       <twilightContext.Provider value={twilight}>
@@ -277,7 +286,9 @@ export default function Layout(weatherData: forecastType) {
                     },
                   }}
                   data={{
-                    labels: new Array(8).fill(""),
+                    labels: hourlyForecast.map((obj: any) => {
+                      return getTime(obj.time);
+                    }),
                     datasets: [
                       {
                         data: hourlyForecast.map((obj: any) => {
