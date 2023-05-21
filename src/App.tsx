@@ -74,7 +74,7 @@ function App() {
     ) {
       await axios // PRODUCTION https://proxy-1-w1428275.deta.app
         .get(
-          `https://proxy-2-w1428275.deta.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
+          `https://weather-data-proxy.vercel.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
         .then((res) => {
           if (res.data.user_city) setUserCity(res.data.user_city);
@@ -100,7 +100,7 @@ function App() {
       setIsLoading(true);
       await axios
         .get(
-          `https://proxy-2-w1428275.deta.app/fetch-geocode?input_city=${inputCity}`
+          `https://weather-data-proxy.vercel.app/fetch-geocode?input_city=${inputCity}`
         )
         .then((result) => {
           // console.log(result.data);
