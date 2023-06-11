@@ -172,8 +172,19 @@ export default function Layout(weatherData: forecastType) {
             <div className="flex flex-col justify-center items-center px-2">
               <div className="grid grid-cols-8 w-full bg-white bg-opacity-20 rounded-xl mb-8">
                 <div className="col-span-8 flex flex-col justify-between px-8  items-start 2xl:px-12">
-                  <div className="text-xl flex justify-center items-center md:text-2xl lg:text-3xl 2xl:text-3xl lg:px-6 2xl:mb-14  rounded-full px-4 py-2 bg-sky-600 -translate-y-6 -translate-x-6">
-                    <HiLocationMarker />
+                  <div
+                    className={`text-xl min-w-[80px] flex justify-center items-center md:text-2xl lg:text-3xl 2xl:text-3xl lg:px-6 2xl:mb-14  rounded-full px-4 py-2 bg-sky-600 -translate-y-6 -translate-x-6  ${
+                      !userCity && "animate-pulse"
+                    }`}
+                  >
+                    <div
+                      className={`${
+                        userCity ? "opacity-100" : "opacity-0"
+                      } transition-opacity duration-500`}
+                    >
+                      <HiLocationMarker />
+                    </div>
+
                     <div className="ml-2">{userCity}</div>
                   </div>
                   <div className="flex pr-6 items-center justify-between w-full ">
