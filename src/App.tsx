@@ -154,7 +154,7 @@ function App() {
                     className="bg-transparent border-4 border-white rounded-full w-full focus:outline-offset-2 focus:outline-white pl-6 pr-10 md:pr-12 py-2 placeholder:text-sky-200 xl:pl-10 lg:py-3 lg:text-3xl lg:pl-8 xl:py-4"
                     onChange={(e) => setInputCity(e.target.value)}
                     value={inputCity}
-                    placeholder="Enter city name"
+                    placeholder="Vnesite ime mesta"
                   />
                   <button
                     type="submit"

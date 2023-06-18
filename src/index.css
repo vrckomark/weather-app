@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
+
+* {
+  font-family: "Jost", sans-serif;
+}
+
 body {
   overflow-x: hidden;
   font-family: "Jost", sans-serif;

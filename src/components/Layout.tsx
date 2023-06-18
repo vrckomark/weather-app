@@ -232,7 +232,7 @@ export default function Layout(weatherData: forecastType) {
                       </>
                     )}
                   </div>
-                  <div className="text-base md:text-xl mt-8 justify-center flex items-center w-full translate-y-3">
+                  <div className="text-base md:text-xl mt-8 justify-center flex items-center w-full">
                     <div className="bg-sky-900  rounded-full px-4">Danes</div>
                   </div>
                 </div>
@@ -272,6 +272,13 @@ export default function Layout(weatherData: forecastType) {
                     },
                     responsive: true,
                     plugins: {
+                      legend: {
+                        labels: {
+                          font: {
+                            family: "'Jost', sans-serif",
+                          },
+                        },
+                      },
                       tooltip: {
                         enabled: false,
                         // backgroundColor: "rgba(0, 0, 0,0.4)",
