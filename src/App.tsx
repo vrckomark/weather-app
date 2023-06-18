@@ -72,7 +72,7 @@ function App() {
       coords?.latitude === coordinates.latitude &&
       coords?.longitude === coordinates.longitude
     ) {
-      await axios // PRODUCTION https://proxy-1-w1428275.deta.app
+      await axios
         .get(
           `https://weather-data-proxy.vercel.app/fetch-reverse-geocode?lat=${coordinates?.latitude}&lon=${coordinates?.longitude}`
         )
@@ -81,10 +81,6 @@ function App() {
           setIsLoading(false);
         });
     }
-
-    // DEV
-    // setUserCity("Maribor");
-    // setIsLoading(false);
   }
 
   useEffect(() => {

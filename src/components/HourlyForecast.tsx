@@ -22,7 +22,6 @@ export const isSameDay = (date1: Date, date2: Date) => {
 const HourlyForecast = ({ hourlyForecast }: any) => {
   const isCelsius = useContext(celsiusContext);
   const twilight = useContext(twilightContext);
-  // console.log(twilight);
   const isNight = (time: Date) => {
     if (twilight) {
       for (const sunsetTime of twilight.sunsetTimes) {
